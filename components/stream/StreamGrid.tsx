@@ -22,7 +22,7 @@ export default function StreamGrid() {
   }, []);
 
   return (
-    <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+    <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {STREAM_META.map((s, i) => (
         <StreamCard key={s.title} {...s} videoSrc={videoSrcs[i]} />
       ))}

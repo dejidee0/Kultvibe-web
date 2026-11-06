@@ -49,7 +49,7 @@ export default function CreatorsGrid() {
         <SectionHeader icon={StarIcon} title="Featured creators" cta="All creators" ctaHref="/creators" />
       </div>
 
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {CREATORS.map((c) => (
           <CreatorCard key={c.name} {...c} />
         ))}

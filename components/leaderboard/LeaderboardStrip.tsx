@@ -69,21 +69,20 @@ export default function LeaderboardStrip() {
 
       {/* Marquee container */}
       <div
-        className="overflow-hidden"
+        data-mobile-strip className="overflow-x-auto snap-x snap-mandatory no-scrollbar lg:overflow-hidden lg:snap-none"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
         <div
-          className="flex gap-3"
+          className="flex gap-3 lg:animate-[leaderboard-scroll_28s_linear_infinite]"
           style={{
-            animation: 'leaderboard-scroll 28s linear infinite',
             animationPlayState: paused ? 'paused' : 'running',
             width: 'max-content',
           }}
         >
           {/* Render twice for seamless loop */}
           {[...PLAYERS, ...PLAYERS].map((p, i) => (
-            <Link key={i} href={`/players/${p.name.replace('@', '')}`}>
+            <Link className={i >= PLAYERS.length ? 'hidden lg:block flex-shrink-0 snap-start' : 'block flex-shrink-0 snap-start'} key={i} href={`/players/${p.name.replace('@', '')}`}>
               <PlayerCard {...p} />
             </Link>
           ))}

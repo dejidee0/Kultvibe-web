@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -14,6 +14,13 @@ const geistMono = localFont({
 });
 
 const OG_IMAGE = "https://res.cloudinary.com/dioiyb833/image/upload/f_auto,q_auto,w_1200,h_630,c_limit/v1783692874/kult-vibes-OG_m4yjdw.png";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#08080D",
+};
 
 export const metadata: Metadata = {
   title: "KultVibe — Compete. Stream. Earn.",

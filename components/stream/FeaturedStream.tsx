@@ -96,17 +96,16 @@ export default function FeaturedStream() {
   return (
     <div
       ref={containerRef}
-      className="grid overflow-hidden rounded-xl"
+      className="grid min-w-0 grid-cols-1 lg:[grid-template-columns:var(--featured-columns)] lg:h-[400px] overflow-hidden rounded-xl"
       style={{
-        gridTemplateColumns: showChat ? '1fr 280px' : '1fr',
-        height: 400,
+        '--featured-columns': showChat ? 'minmax(0, 1fr) 280px' : 'minmax(0, 1fr)',
         background: '#111118',
         border: '1px solid rgba(255,255,255,0.07)',
         transition: 'grid-template-columns 0.3s ease',
-      }}
+      } as React.CSSProperties}
     >
       {/* Video and info column */}
-      <div className="h-full overflow-hidden" style={{ position: 'relative' }}>
+      <div className="min-w-0 aspect-video lg:aspect-auto lg:h-full overflow-hidden" style={{ position: 'relative' }}>
         {/* Video Area */}
         <div className="group relative w-full h-full flex flex-col justify-end overflow-hidden">
           <video
@@ -161,7 +160,7 @@ export default function FeaturedStream() {
         >
           {/* Hoverable streamer profile */}
           <div
-            className="relative flex items-center gap-3 cursor-pointer"
+            className="relative min-w-0 flex items-center gap-3 cursor-pointer"
             onMouseEnter={() => setShowCard(true)}
             onMouseLeave={() => setShowCard(false)}
           >
@@ -204,7 +203,7 @@ export default function FeaturedStream() {
       </div>
 
       {/* Live chat */}
-      {showChat && <LiveChat />}
+      {showChat && <div className="min-w-0 h-[280px] lg:h-full"><LiveChat /></div>}
     </div>
   );
 }

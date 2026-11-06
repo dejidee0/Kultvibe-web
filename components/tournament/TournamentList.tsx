@@ -38,7 +38,7 @@ const TOURNAMENTS = [
 
 export default function TournamentList() {
   return (
-    <div className="grid grid-cols-4 gap-3">
+    <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
       {TOURNAMENTS.map((t) => (
         <TournamentCard key={t.name} {...t} />
       ))}

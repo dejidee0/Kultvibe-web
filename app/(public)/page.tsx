@@ -18,8 +18,8 @@ import UpcomingStrip from '@/components/tournament/UpcomingStrip';
 export default function Homepage() {
   return (
     <div
-      className="flex flex-col"
-      style={{ padding: 24, gap: 32, background: '#08080D', minHeight: '100%' }}
+      className="flex min-w-0 flex-col p-4 gap-6 lg:p-6 lg:gap-8"
+      style={{ background: '#08080D', minHeight: '100%' }}
     >
       <FeaturedStream />
 

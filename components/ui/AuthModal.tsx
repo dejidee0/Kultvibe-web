@@ -62,17 +62,19 @@ export default function AuthModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
+            className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none p-4"
           >
             <div
-              className="pointer-events-auto w-[440px] rounded-2xl p-8 relative"
+              role="dialog" aria-modal="true" aria-label={modalView === 'register' ? 'Join the waitlist' : 'Welcome back'}
+              className="pointer-events-auto w-full max-w-[440px] max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-2xl p-5 sm:p-8 relative [&_input]:min-h-11 [&_select]:min-h-11 [&_button]:min-h-11 [&_button]:text-base lg:[&_button]:text-sm lg:[&_input]:min-h-0 lg:[&_select]:min-h-0 lg:[&_button]:min-h-0"
               style={{ background: '#0D0D14', border: '1px solid rgba(255,255,255,0.10)' }}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close */}
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 transition-colors"
+                aria-label="Close"
+                className="absolute top-1 right-1 flex h-11 w-11 items-center justify-center transition-colors lg:top-4 lg:right-4 lg:h-5 lg:w-5"
                 style={{ color: 'rgba(255,255,255,0.30)' }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.70)')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.30)')}
@@ -106,7 +108,7 @@ export default function AuthModal() {
 
               {modalView === 'login' && <>
               {/* Social buttons */}
-              <div className="grid grid-cols-2 gap-3 mb-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5">
                 {[
                   { label: 'Google',  icon: '/icons/google.svg',  bg: 'rgba(255,255,255,0.05)',  hoverBg: 'rgba(255,255,255,0.10)',  border: 'rgba(255,255,255,0.10)' },
                   { label: 'Discord', icon: '/icons/discord.svg', bg: 'rgba(88,101,242,0.10)',   hoverBg: 'rgba(88,101,242,0.20)',   border: 'rgba(88,101,242,0.30)' },
@@ -139,7 +141,7 @@ export default function AuthModal() {
               {modalView === 'register' ? (
                 <div className="flex flex-col gap-3 mb-5">
                   {submitted ? (
-                    <div className="rounded-lg px-4 py-5 text-center" style={{ background: 'rgba(16,185,129,0.10)', border: '1px solid rgba(16,185,129,0.25)' }}>
+                    <div className="rounded-lg px-4 py-5 text-center break-words" style={{ background: 'rgba(16,185,129,0.10)', border: '1px solid rgba(16,185,129,0.25)' }}>
                       <p className="text-sm font-medium" style={{ color: '#10B981' }}>You&apos;re on the list 🎉</p>
                       <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>Your spot is confirmed. We&apos;ll email you when your access opens.</p>
                     </div>
@@ -165,14 +167,14 @@ export default function AuthModal() {
                 </div>
               )}
 
-              {error && <p role="alert" className="text-sm text-[#FF4D6D] whitespace-pre-line mb-4">{error}</p>}
+              {error && <p role="alert" className="text-sm text-[#FF4D6D] whitespace-pre-line break-words mb-4">{error}</p>}
 
               {/* Submit */}
               {!submitted && (
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full font-medium py-3 rounded-lg text-sm transition-colors mb-4"
+                  className="w-full font-medium py-3 rounded-lg text-base lg:text-sm transition-colors mb-4"
                   style={{ background: '#F0B429', color: '#08080D', opacity: submitting ? 0.7 : 1 }}
                   onMouseEnter={e => { if (!submitting) (e.currentTarget.style.background = '#D4A017') }}
                   onMouseLeave={e => (e.currentTarget.style.background = '#F0B429')}
