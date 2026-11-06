@@ -2,6 +2,8 @@ import React from 'react';
 import Sidebar from '@/components/layout/Sidebar';
 import Topbar from '@/components/layout/Topbar';
 import AuthModal from '@/components/ui/AuthModal';
+import MobileHeader from '@/components/layout/MobileHeader';
+import MobileTabBar from '@/components/layout/MobileTabBar';
 
 export default function PublicLayout({
   children,
@@ -10,15 +12,17 @@ export default function PublicLayout({
 }) {
   return (
     <>
-      <div className="flex h-screen w-screen overflow-hidden bg-kv-base">
+      <div className="flex h-dvh w-full overflow-hidden bg-kv-base">
         <Sidebar />
-        <div className="flex flex-col flex-1 overflow-hidden">
-          <Topbar />
-          <main className="flex-1 overflow-y-auto h-full">
+        <div className="flex min-w-0 flex-col flex-1 overflow-hidden">
+          <div className="hidden lg:block"><Topbar /></div>
+          <MobileHeader />
+          <main className="flex-1 min-h-0 min-w-0 overflow-y-auto h-full pb-[calc(65px+env(safe-area-inset-bottom))] lg:pb-0">
             {children}
           </main>
         </div>
       </div>
+      <MobileTabBar />
       <AuthModal />
     </>
   );

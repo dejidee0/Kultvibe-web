@@ -10,7 +10,7 @@ export default function Sidebar() {
   const iconOnly = pathname === '/community';
 
   return (
-    <aside className="flex h-full flex-shrink-0">
+    <aside className="hidden lg:flex h-full flex-shrink-0">
       <IconBar />
       {!iconOnly && <ChannelPanel />}
     </aside>
