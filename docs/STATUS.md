@@ -1,10 +1,10 @@
 # KultVibe frontend status
 
-Updated: 2026-11-05
+Updated: 2026-11-06
 
 Current phase: Phase 1, waitlist.
 
-Backend deployed: see DECISIONS.md
+Backend is live at https://api.kultvibe.com; see the live deployment details below.
 
 ## Done
 
@@ -19,16 +19,26 @@ Backend deployed: see DECISIONS.md
 
 ## Pending
 
-- Verify dev publication and the backend's production readiness, deployment, live smoke test, and exact public API URL.
-- Set NEXT_PUBLIC_API_BASE_URL before a future production build and allow the exact frontend origin in backend CORS configuration.
-- Frontend deployment and Vercel settings are outside the current authorized backend deployment run.
-- Phase 1 implements waitlist signup; account/login behavior belongs to later work.
-- Resolve the verticals decision with David; do not remove existing backend enum values once real signups exist.
+- Check the HTTPS certificate renewal in late January 2027.
+- Track the low-priority HEAD health-check response (405).
+- Resolve the open six-verticals versus two-pillars decision with David; preserve existing enum values.
+- Phase 1 implements waitlist signup; account and login behavior belong to later work.
+
+## Live deployment
+
+- Backend: https://api.kultvibe.com, hosted on SmarterASP. DNS is CNAME `api` -> `mykultvibe-001-site1.ktempurl.com`; DNS is managed in Vercel because the domain uses Vercel nameservers, and the domain is registered at Namecheap.
+- HTTPS uses a SmarterASP free Let's Encrypt certificate, expiring 2027-02-04. Check renewal in late January 2027.
+- The API serves `/.well-known` before HTTPS redirection so ACME certificate validation and renewal work.
+- Hosting-level Basic authentication on the SmarterASP site is disabled; it had blocked all requests with HTTP 401. The API's admin endpoints retain their own authentication.
+- Production CORS allows https://kultvibe.com, https://www.kultvibe.com, and https://kultvibe.vercel.app. The apex domain redirects to https://www.kultvibe.com.
+- SmarterASP server IP 208.98.35.144 is authorised in Brevo. Live confirmation-email delivery was verified in a real inbox.
+- Known low-priority issue: `HEAD /api/health` returns 405; `GET /api/health` returns 200.
+- Open decision: six verticals versus two pillars (gaming and creators, with streaming as a bridge), pending discussion with David. Preserve the existing enum values while that decision is pending.
 
 ## Run locally
 
 1. Run `npm ci` in this repository.
-2. Optionally copy `.env.example` to `.env.local`. In development, the API URL defaults to `http://localhost:5080`.
+2. Optionally copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_BASE_URL=http://localhost:5080` for local development; the template defaults to the live HTTPS API. With no variable in development, the API URL defaults to localhost.
 3. Start the configured .NET backend in Development on port 5080, then run `npm run dev` here on port 3000.
 4. Use the waitlist modal. Production builds require the public API base URL explicitly; they do not fall back to localhost.
 
@@ -37,4 +47,4 @@ See [waitlist integration setup](waitlist-integration.md) for the API contract a
 ## Deployment targets
 
 - Backend: SmarterASP, IIS in-process hosting, deployed from the sibling backend repository through Web Deploy.
-- Frontend: Vercel. Do not deploy the frontend or change Vercel settings during this backend deployment run.
+- Frontend: Vercel; merging the web repository into main triggers the production deploy. Vercel settings and environment variables are managed separately.

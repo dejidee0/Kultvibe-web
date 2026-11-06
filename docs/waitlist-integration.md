@@ -4,7 +4,7 @@ The signup modal calls the .NET API directly. The former Next.js Resend endpoint
 
 ## Local development
 
-1. Copy `.env.example` to `.env.local` (optional in `next dev`: the API URL defaults to `http://localhost:5080`).
+1. Copy `.env.example` to `.env.local` and change `NEXT_PUBLIC_API_BASE_URL` to `http://localhost:5080` for local development; the template defaults to https://api.kultvibe.com. Copying is optional in `next dev`: with no variable, the API URL defaults to localhost.
 2. Start the configured backend on port 5080 in Development, then run `npm run dev` here on port 3000.
 3. The backend Development settings allow `http://localhost:3000` and `http://127.0.0.1:3000`. If intentionally running the backend in Production locally, set `CORS__AllowedOrigins` in that process to the local frontend origin; do not edit or expose credentials.
 
