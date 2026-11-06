@@ -1,30 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Cancel01Icon } from '@hugeicons/core-free-icons';
 import { useAuthStore } from '@/store/useAuthStore';
+import { joinWaitlist, waitlistVerticals, type WaitlistVertical } from '@/lib/waitlist';
 
 export default function AuthModal() {
   const { isModalOpen, modalView, closeModal, toggleView } = useAuthStore();
-  const [username, setUsername]   = useState('')
-  const [gamerTag, setGamerTag]   = useState('')
-  const [email, setEmail]         = useState('')
-  const [password, setPassword]   = useState('')
+  const [fullName, setFullName] = useState('')
+  const [gamerTag, setGamerTag] = useState('')
+  const [email, setEmail] = useState('')
+  const [primaryVertical, setPrimaryVertical] = useState<WaitlistVertical | ''>('')
   const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted]   = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  async function handleRegister() {
-    if (!email.trim() || submitting) return
+  useEffect(() => {
+    setError(null)
+    setSubmitted(false)
+  }, [isModalOpen, modalView])
+
+  async function handleRegister(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (modalView !== 'register' || submitting || !primaryVertical) return
     setSubmitting(true)
+    setError(null)
     try {
-      await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, username, gamerTag }),
+      await joinWaitlist({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        gamerTag: gamerTag.trim() || undefined,
+        primaryVertical,
       })
       setSubmitted(true)
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : 'We could not confirm your signup. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -84,14 +96,15 @@ export default function AuthModal() {
 
               {/* Heading */}
               <h2 className="text-xl font-medium text-white text-center mb-1">
-                {modalView === 'register' ? 'Join the arena' : 'Welcome back'}
+                {modalView === 'register' ? 'Join the waitlist' : 'Welcome back'}
               </h2>
               <p className="text-xs text-white/40 text-center mb-6">
                 {modalView === 'register'
-                  ? 'Compete, stream and earn across Africa'
+                  ? 'Your Culture. Your Stage. Your Money.'
                   : 'Sign in to your KultVibe account'}
               </p>
 
+              {modalView === 'login' && <>
               {/* Social buttons */}
               <div className="grid grid-cols-2 gap-3 mb-5">
                 {[
@@ -120,32 +133,24 @@ export default function AuthModal() {
                 <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.08)' }} />
               </div>
 
+              </>}
+              <form onSubmit={handleRegister}>
               {/* Fields */}
               {modalView === 'register' ? (
                 <div className="flex flex-col gap-3 mb-5">
                   {submitted ? (
                     <div className="rounded-lg px-4 py-5 text-center" style={{ background: 'rgba(16,185,129,0.10)', border: '1px solid rgba(16,185,129,0.25)' }}>
                       <p className="text-sm font-medium" style={{ color: '#10B981' }}>You&apos;re on the list 🎉</p>
-                      <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>We&apos;ll reach out when Season 1 goes live.</p>
+                      <p className="text-xs mt-1" style={{ color: 'rgba(255,255,255,0.45)' }}>Your spot is confirmed. We&apos;ll email you when your access opens.</p>
                     </div>
                   ) : (
                     <>
-                      <div className="grid grid-cols-2 gap-3">
-                        <input type="text" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
-                        <input type="text" placeholder="Gamer tag (optional)" value={gamerTag} onChange={e => setGamerTag(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
-                      </div>
-                      <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
-                      <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
-                      <select className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white/60 outline-none focus:border-yellow-500/50 transition-colors">
-                        <option value="" disabled>Primary game / vertical</option>
-                        <option>COD Mobile</option>
-                        <option>PUBG Mobile</option>
-                        <option>EA FC</option>
-                        <option>Free Fire</option>
-                        <option>Music / Beats</option>
-                        <option>Tech / CTF</option>
-                        <option>Lifestyle / Vlog</option>
-                        <option>Streaming</option>
+                      <input type="text" aria-label="Full name" placeholder="Full name" required maxLength={100} autoComplete="name" value={fullName} onChange={e => setFullName(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
+                      <input type="text" aria-label="Gamer tag (optional)" placeholder="Gamer tag (optional)" maxLength={50} value={gamerTag} onChange={e => setGamerTag(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
+                      <input type="email" aria-label="Email address" placeholder="Email address" required maxLength={255} autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-white/30 outline-none focus:border-yellow-500/50 transition-colors" />
+                      <select aria-label="Primary vertical" required value={primaryVertical} onChange={e => setPrimaryVertical(e.target.value as WaitlistVertical)} className="bg-[#111118] border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white/60 outline-none focus:border-yellow-500/50 transition-colors">
+                        <option value="" disabled>Choose your primary vertical</option>
+                        {waitlistVerticals.map(vertical => <option key={vertical} value={vertical}>{vertical}</option>)}
                       </select>
                     </>
                   )}
@@ -160,26 +165,30 @@ export default function AuthModal() {
                 </div>
               )}
 
+              {error && <p role="alert" className="text-sm text-[#FF4D6D] whitespace-pre-line mb-4">{error}</p>}
+
               {/* Submit */}
               {!submitted && (
                 <button
-                  onClick={modalView === 'register' ? handleRegister : undefined}
+                  type="submit"
                   disabled={submitting}
                   className="w-full font-medium py-3 rounded-lg text-sm transition-colors mb-4"
                   style={{ background: '#F0B429', color: '#08080D', opacity: submitting ? 0.7 : 1 }}
                   onMouseEnter={e => { if (!submitting) (e.currentTarget.style.background = '#D4A017') }}
                   onMouseLeave={e => (e.currentTarget.style.background = '#F0B429')}
                 >
-                  {submitting ? 'Joining…' : modalView === 'register' ? 'Create account' : 'Sign in'}
+                  {submitting ? 'Joining…' : modalView === 'register' ? 'Join the waitlist' : 'Sign in'}
                 </button>
               )}
+
+              </form>
 
               {/* Toggle */}
               <p className="text-xs text-white/35 text-center">
                 {modalView === 'register' ? 'Already have an account?' : "Don't have an account?"}
                 {' '}
                 <span onClick={toggleView} className="text-yellow-400 cursor-pointer hover:text-yellow-300 transition-colors">
-                  {modalView === 'register' ? 'Sign in' : 'Create account'}
+                  {modalView === 'register' ? 'Sign in' : 'Join the waitlist'}
                 </span>
               </p>
             </div>
