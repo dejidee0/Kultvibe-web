@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "KultVibe — Compete. Stream. Earn.",
     description: "Africa's gaming and esports platform. Join tournaments, stream live, and earn across the continent.",
-    url: "https://kultvibe.gg",
+    url: "https://www.kultvibe.com",
     siteName: "KultVibe",
     images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "KultVibe" }],
     type: "website",
