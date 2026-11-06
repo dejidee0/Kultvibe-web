@@ -24,7 +24,7 @@ export default function TournamentCard({
   const pct = ((totalSpots - spotsLeft) / totalSpots) * 100;
 
   return (
-    <div className="bg-kv-card rounded-xl overflow-hidden cursor-pointer transition-colors group">
+    <div className="min-w-0 bg-kv-card rounded-xl overflow-hidden cursor-pointer transition-colors group">
 
       {/* Banner */}
       <div className="relative h-[160px] overflow-hidden">
@@ -47,7 +47,7 @@ export default function TournamentCard({
 
         {/* Tournament name */}
         <div className="absolute bottom-3 left-3 right-3">
-          <p className="text-sm font-medium text-white leading-tight">{name}</p>
+          <p className="text-sm font-medium text-white leading-tight max-lg:break-words">{name}</p>
         </div>
       </div>
 

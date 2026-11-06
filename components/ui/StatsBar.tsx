@@ -57,10 +57,10 @@ export default function StatsBar() {
   ];
 
   return (
-    <div className="bg-kv-surface rounded-xl px-8 py-6">
-      <div className="grid grid-cols-4">
+    <div className="bg-kv-surface rounded-xl px-4 py-6 lg:px-8">
+      <div className="grid min-w-0 grid-cols-2 gap-y-6 lg:grid-cols-4 lg:gap-y-0">
         {stats.map(({ icon, iconColor, value, label }) => (
-          <div key={label} className="flex flex-col items-center justify-center gap-1 px-6">
+          <div key={label} className="flex flex-col items-center justify-center gap-1 min-w-0 px-2 lg:px-6">
             <HugeiconsIcon icon={icon} size={20} color={iconColor} strokeWidth={1.5} />
             <p className="text-2xl font-medium text-white">{value}</p>
             <p className="text-xs text-white/40 text-center">{label}</p>

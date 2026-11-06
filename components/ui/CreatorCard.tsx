@@ -25,7 +25,7 @@ export default function CreatorCard({
   bannerTo,
 }: CreatorCardProps) {
   return (
-    <div className="bg-kv-card rounded-xl cursor-pointer group">
+    <div className="min-w-0 bg-kv-card rounded-xl cursor-pointer group">
       {/* Banner + avatar overlap wrapper */}
       <div className="relative">
         <div className="h-[70px] overflow-hidden rounded-t-xl">
@@ -49,8 +49,8 @@ export default function CreatorCard({
       <div className="px-4 pb-4" style={{ paddingTop: 30 }}>
 
         {/* Name + verified */}
-        <div className="flex items-center gap-1.5 mb-1">
-          <span className="text-sm font-medium text-white">{name}</span>
+        <div className="flex min-w-0 items-center gap-1.5 mb-1">
+          <span className="text-sm font-medium text-white max-lg:truncate">{name}</span>
           {verified && (
             <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} color="#F0B429" strokeWidth={1.5} />
           )}

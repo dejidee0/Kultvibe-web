@@ -46,7 +46,7 @@ export default function StreamCard({
 
   const card = (
     <div
-      className="group flex flex-col rounded-lg overflow-hidden cursor-pointer"
+      className="group min-w-0 flex flex-col rounded-lg overflow-hidden cursor-pointer"
       style={{
         background: '#111118',
         border: '1px solid rgba(255,255,255,0.07)',
@@ -56,7 +56,7 @@ export default function StreamCard({
       onMouseLeave={handleMouseLeave}
     >
       {/* Thumbnail */}
-      <div className="relative h-[110px] overflow-hidden flex-shrink-0">
+      <div className="relative aspect-video lg:aspect-auto lg:h-[110px] overflow-hidden flex-shrink-0">
         {videoSrc ? (
           <video
             ref={videoRef}
@@ -103,9 +103,9 @@ export default function StreamCard({
       </div>
 
       {/* Body */}
-      <div className="flex flex-col gap-1 p-2.5">
+      <div className="flex min-w-0 flex-col gap-1 p-2.5">
         <p className="font-medium truncate" style={{ fontSize: 12, color: '#fff' }}>{title}</p>
-        <p style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)' }}>
+        <p className="max-lg:truncate" style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)' }}>
           {streamer} <span style={{ color: 'rgba(255,255,255,0.25)' }}>·</span> {city}
         </p>
         <div className="flex items-center gap-1 mt-0.5 flex-wrap">
@@ -130,7 +130,7 @@ export default function StreamCard({
   );
 
   return id ? (
-    <Link href={`/streams/${id}`} className="block">
+    <Link href={`/streams/${id}`} className="block min-w-0">
       {card}
     </Link>
   ) : card;

@@ -30,8 +30,8 @@ export default function SectionHeader({
   );
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
+    <div className="flex min-w-0 items-center justify-between max-lg:flex-wrap max-lg:gap-2">
+      <div className="flex min-w-0 items-center gap-2">
         {badge && (
           <span
             className="font-bold text-white rounded px-2 py-0.5"
@@ -41,13 +41,13 @@ export default function SectionHeader({
           </span>
         )}
         {icon && <HugeiconsIcon icon={icon} size={18} color={iconColor} strokeWidth={1.5} />}
-        <h2 className="text-[15px] font-semibold text-white">{title}</h2>
+        <h2 className="text-[15px] font-semibold text-white max-lg:truncate">{title}</h2>
       </div>
       {cta && (
         ctaHref ? (
           <Link
             href={ctaHref}
-            className="flex items-center gap-1 text-xs font-medium transition-colors hover:text-white"
+            className="flex shrink-0 items-center gap-1 text-xs font-medium transition-colors hover:text-white"
             style={{ color: 'rgba(255,255,255,0.45)' }}
           >
             {ctaContent}
@@ -55,7 +55,7 @@ export default function SectionHeader({
         ) : (
           <button
             onClick={onCtaClick}
-            className="flex items-center gap-1 text-xs font-medium transition-colors hover:text-white"
+            className="flex shrink-0 items-center gap-1 text-xs font-medium transition-colors hover:text-white"
             style={{ color: 'rgba(255,255,255,0.45)' }}
           >
             {ctaContent}

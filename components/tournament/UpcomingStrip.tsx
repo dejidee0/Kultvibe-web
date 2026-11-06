@@ -89,7 +89,7 @@ function UpcomingCard({
   const countdown = useCountdown(date);
 
   return (
-    <div className="bg-kv-card rounded-xl overflow-hidden flex-shrink-0 w-[220px] cursor-pointer">
+    <div className="bg-kv-card rounded-xl overflow-hidden flex-shrink-0 w-[220px] snap-start cursor-pointer">
       {/* Banner */}
       <div className="relative h-[100px] overflow-hidden">
         <img src={imageSrc} alt={name} className="w-full h-full object-cover" loading="lazy" />
@@ -139,7 +139,7 @@ export default function UpcomingStrip() {
       </div>
 
       {/* Scroll row */}
-      <div className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+      <div data-mobile-strip className="flex min-w-0 gap-3 overflow-x-auto pb-2 snap-x snap-mandatory lg:snap-none no-scrollbar" style={{ scrollbarWidth: 'none' }}>
         {UPCOMING.map((t) => (
           <UpcomingCard key={t.name} {...t} />
         ))}
