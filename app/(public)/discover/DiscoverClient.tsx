@@ -61,23 +61,23 @@ export default function DiscoverClient() {
   })
 
   return (
-    <div className="flex gap-6 p-6 min-h-full items-start">
+    <div className="flex min-w-0 flex-col gap-6 p-4 sm:p-6 xl:flex-row xl:items-start min-h-full">
 
       {/* ---- Main feed ---- */}
       <div className="flex-1 min-w-0 flex flex-col gap-4">
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex min-w-0 flex-col gap-3 mb-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-white/40">Everything happening on KultVibe right now</p>
           <div
-            className="flex items-center rounded-lg p-1"
+            className="flex max-w-full items-center overflow-x-auto rounded-lg p-1"
             style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
           >
             {TABS.map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className="px-3 py-1.5 rounded-md text-xs font-medium transition-colors"
+                className="min-h-11 shrink-0 px-3 py-1.5 rounded-md text-xs font-medium transition-colors lg:min-h-0"
                 style={
                   activeTab === tab
                     ? { background: 'rgba(240,180,41,0.15)', color: '#F0B429' }
@@ -94,7 +94,7 @@ export default function DiscoverClient() {
         {filteredFeed.map(item => (
           <div
             key={item.id}
-            className="rounded-xl p-4 flex gap-3 transition-colors"
+            className="rounded-xl p-4 grid grid-cols-[40px_minmax(0,1fr)] gap-3 transition-colors sm:flex"
             style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
             onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)')}
             onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)')}
@@ -120,8 +120,8 @@ export default function DiscoverClient() {
             {/* Content */}
             <div className="flex-1 min-w-0">
               <p className="text-xs font-medium text-white leading-snug mb-0.5">{item.title}</p>
-              <p className="text-xs text-white/50 mb-2 leading-relaxed">{item.description}</p>
-              <div className="flex items-center gap-2">
+              <p className="text-xs text-white/50 mb-2 leading-relaxed break-words">{item.description}</p>
+              <div className="flex flex-wrap items-center gap-2">
                 {item.game && (
                   <span
                     className="text-[10px] text-white/40 px-2 py-0.5 rounded-md"
@@ -143,14 +143,14 @@ export default function DiscoverClient() {
             </div>
 
             {/* Far-right: timestamp + value + action */}
-            <div className="flex-shrink-0 flex flex-col items-end justify-between gap-2 self-stretch">
+            <div className="col-start-2 flex flex-wrap items-center justify-between gap-2 sm:flex-shrink-0 sm:flex-col sm:items-end sm:self-stretch">
               <span className="text-[10px] text-white/30 whitespace-nowrap">{item.timestamp}</span>
               {item.value && (
                 <span className="text-[10px] font-semibold text-[#F0B429]">{item.value}</span>
               )}
               <Link href={(item.type === 'winner' || item.type === 'rank_up') ? `/players/${item.actorSeed}` : item.actionHref}>
                 <button
-                  className="text-xs px-3 py-1.5 rounded-md font-medium whitespace-nowrap transition-colors"
+                  className="min-h-11 text-xs px-3 py-1.5 rounded-md font-medium whitespace-nowrap transition-colors lg:min-h-0"
                   style={
                     item.type === 'stream_live'
                       ? { background: 'rgba(255,77,109,0.15)', border: '1px solid rgba(255,77,109,0.30)', color: '#FF4D6D' }
@@ -168,7 +168,7 @@ export default function DiscoverClient() {
       </div>
 
       {/* ---- Right sidebar ---- */}
-      <div className="w-[272px] flex-shrink-0 flex flex-col gap-4 sticky top-6">
+      <div className="grid w-full min-w-0 gap-4 sm:grid-cols-2 xl:sticky xl:top-6 xl:flex xl:w-[272px] xl:flex-shrink-0 xl:flex-col">
 
         {/* Live activity counter */}
         <div
