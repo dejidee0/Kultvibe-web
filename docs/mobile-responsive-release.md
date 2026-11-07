@@ -62,8 +62,68 @@ Setup corrections before the final run: startup polling switched to curl; the ba
 
 ## Step 3: production release
 
-Pending.
+Production merge commit, main and dev immediately after Step 3: `0011e21b3bd8a8c4de859c09f53931c87afdb166`. No force push, history rewrite, Vercel setting change, or environment-variable change was used.
+
+- Production build before: `i-9UQf9mfAibb5imZendy`.
+- Production build after: `0X5prlJduG1_Gku5DyHDi`.
+- New build observed 42.2 seconds into polling, 49.8 seconds after the main push.
+- Build ID came from the App Router payload because this page exposes no build-ID manifest path.
+- API health GET: HTTP 200.
+
+| Live route | 360×800 | 390×844 |
+|---|:---:|:---:|
+| `/` | PASS (200) | PASS (200) |
+| `/discover` | PASS (200) | PASS (200) |
+| `/compete` | PASS (200) | PASS (200) |
+| `/streams` | PASS (200) | PASS (200) |
+| `/leaderboards` | PASS (200) | PASS (200) |
+| `/creators` | PASS (200) | PASS (200) |
+| `/community` | PASS (200) | PASS (200) |
+| `/login` | PASS (200) | PASS (200) |
+| `/register` | PASS (200) | PASS (200) |
+| `/compete/codm-cup` | PASS (200) | PASS (200) |
+| `/streams/ghostalpha` | PASS (200) | PASS (200) |
+| `/players/GhostAlpha` | PASS (200) | PASS (200) |
+
+All 24 live checks have zero main overflow and zero requested right-edge offenders. Real production images/video were retained; navigation and read-only checks only. Screenshots are saved under `.artifacts/mobile/live/<route-slug>-<width>.png`.
+
+The verification-report push had one transient GitHub DNS failure; the identical non-force push succeeded on its bounded retry before main was merged.
 
 ## Step 4: dashboard sweep
 
-Pending.
+Dashboard layout commit (dev only): `13c673b4341a919543fa4ecbd46cc9028ae11e1f`. Production main remains `0011e21b3bd8a8c4de859c09f53931c87afdb166`. The only dashboard source change adjusts match-heading wrapping and mobile type size; copy and data are unchanged. Dev and the production comparison worktree both built with zero errors and the existing 32 image warnings.
+
+| Dashboard route | 320×640 | 360×800 | 390×844 | 768×1024 |
+|---|:---:|:---:|:---:|:---:|
+| `/dashboard` | PASS | PASS | PASS | PASS |
+| `/dashboard/creator` | PASS | PASS | PASS | PASS |
+| `/dashboard/matches/mobile-layout-check` | PASS | PASS | PASS | PASS |
+| `/dashboard/notifications` | PASS | PASS | PASS | PASS |
+| `/dashboard/rank` | PASS | PASS | PASS | PASS |
+| `/dashboard/settings` | PASS | PASS | PASS | PASS |
+| `/dashboard/stream` | PASS | PASS | PASS | PASS |
+| `/dashboard/tournaments` | PASS | PASS | PASS | PASS |
+| `/dashboard/wallet` | PASS | PASS | PASS | PASS |
+
+| Desktop dashboard route | 1280×800 difference | 1440×900 difference |
+|---|---:|---:|
+| `/dashboard` | 0.0000% | 0.0000% |
+| `/dashboard/creator` | 0.0000% | 0.0000% |
+| `/dashboard/matches/mobile-layout-check` | 0.0000% | 0.0000% |
+| `/dashboard/notifications` | 0.0000% | 0.0000% |
+| `/dashboard/rank` | 0.0000% | 0.0000% |
+| `/dashboard/settings` | 0.0000% | 0.0000% |
+| `/dashboard/stream` | 0.0000% | 0.0000% |
+| `/dashboard/tournaments` | 0.0000% | 0.0000% |
+| `/dashboard/wallet` | 0.0000% | 0.0000% |
+
+Dashboard interactions: 36/36 route/viewport scenarios passed. Two initial search clicks were retried after adding an explicit client-hydration wait; initial timing results were retained in ignored artifacts. Main-content text meets the 14px minimum, measured header/navigation tap targets meet 44px, content clears the mobile tab bar, search expands, More navigation opens/closes, and signup dialogs open/close without submission. All nine dashboard routes currently contain placeholder headings and have no page-specific tabs or controls; no business features or mock content were added.
+
+## Final status
+
+- No failing mobile layout or interaction checks remain in the requested routes/states tested in Chromium.
+- Existing dashboard and standalone auth placeholder content remains unchanged.
+- No signup was submitted and no API write request was sent. The backend repo was not accessed or modified.
+- Both local servers are stopped; ports 3000 and 3001 are free. The temporary production comparison worktree was removed.
+- Remaining warnings: 32 pre-existing native-image lint warnings.
+- Dashboard changes remain on dev and have not been merged into production.
