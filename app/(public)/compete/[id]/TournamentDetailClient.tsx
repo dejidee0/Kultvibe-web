@@ -47,10 +47,10 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
   const tabs = ['Overview', 'Bracket', 'Participants', 'Prizes']
 
   return (
-    <div className="p-6 overflow-y-auto no-scrollbar flex flex-col gap-0">
+    <div className="min-w-0 p-4 sm:p-6 flex flex-col gap-0">
 
       {/* Banner */}
-      <div className="relative h-[280px] rounded-xl overflow-hidden mb-6">
+      <div className="relative h-[340px] sm:h-[300px] xl:h-[280px] rounded-xl overflow-hidden mb-6">
         <img
           src={tournament.imageSrc}
           alt={tournament.name}
@@ -75,10 +75,10 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
           </span>
         </div>
 
-        <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+        <div className="absolute bottom-4 left-4 right-4 flex min-w-0 flex-col items-start gap-4 sm:bottom-6 sm:left-6 sm:right-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-medium text-white mb-2">{tournament.name}</h1>
-            <div className="flex items-center gap-4" style={{ color: 'rgba(255,255,255,0.60)', fontSize: 13 }}>
+            <h1 className="text-xl sm:text-2xl font-medium text-white mb-2 break-words">{tournament.name}</h1>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2" style={{ color: 'rgba(255,255,255,0.60)', fontSize: 13 }}>
               <span className="flex items-center gap-1.5">
                 <HugeiconsIcon icon={Calendar01Icon} size={13} color="rgba(255,255,255,0.50)" strokeWidth={1.5} />
                 Starts {tournament.startDate}
@@ -89,7 +89,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
               </span>
             </div>
           </div>
-          <div className="text-right flex-shrink-0 ml-6">
+          <div className="text-left flex-shrink-0 sm:text-right sm:ml-6">
             <p className="text-xs mb-1" style={{ color: 'rgba(255,255,255,0.40)' }}>Total prize pool</p>
             <p className="text-3xl font-medium" style={{ color: '#F0B429' }}>{tournament.prize}</p>
           </div>
@@ -98,10 +98,10 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
 
       {/* Quick stats + CTA */}
       <div
-        className="rounded-xl p-5 mb-6 flex items-center justify-between"
+        className="rounded-xl p-4 sm:p-5 mb-6 flex min-w-0 flex-col items-stretch gap-5 xl:flex-row xl:items-center xl:justify-between"
         style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
       >
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid min-w-0 grid-cols-2 gap-4 sm:grid-cols-4 xl:gap-8">
           <div>
             <p className="text-[10px] mb-1" style={{ color: 'rgba(255,255,255,0.35)' }}>Entry fee</p>
             <p className="text-sm font-medium text-white">{tournament.entryFee}</p>
@@ -121,7 +121,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
         </div>
         <button
           onClick={() => openModal('register')}
-          className="font-medium px-8 py-3 rounded-lg text-sm transition-colors flex-shrink-0 ml-8"
+          className="min-h-11 font-medium px-8 py-3 rounded-lg text-sm transition-colors flex-shrink-0 xl:ml-8"
           style={{ background: '#F0B429', color: '#08080D' }}
           onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#D4A017' }}
           onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#F0B429' }}
@@ -131,15 +131,15 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-1 mb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+      <div className="flex max-w-full items-center gap-1 overflow-x-auto mb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         {tabs.map(tab => {
           const key = tab.toLowerCase()
           const isActive = activeTab === key
           return (
             <button
               key={key}
-              onClick={() => setActiveTab(key)}
-              className="px-4 py-3 text-sm font-medium transition-colors"
+              aria-pressed={isActive} onClick={() => setActiveTab(key)}
+              className="min-h-11 shrink-0 px-3 sm:px-4 py-3 text-sm font-medium transition-colors"
               style={{
                 borderBottom: isActive ? '2px solid #F0B429' : '2px solid transparent',
                 color: isActive ? '#fff' : 'rgba(255,255,255,0.40)',
@@ -156,8 +156,8 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
 
       {/* Tab: Overview */}
       {activeTab === 'overview' && (
-        <div className="grid grid-cols-3 gap-6">
-          <div className="col-span-2 flex flex-col gap-6">
+        <div className="grid min-w-0 grid-cols-1 gap-6 xl:grid-cols-3">
+          <div className="min-w-0 xl:col-span-2 flex flex-col gap-6">
             <div>
               <h3 className="text-sm font-medium text-white mb-3">About this tournament</h3>
               <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.60)' }}>{tournament.description}</p>
@@ -205,7 +205,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
       {/* Tab: Bracket */}
       {activeTab === 'bracket' && (
         <div
-          className="rounded-xl p-12 flex flex-col items-center justify-center text-center"
+          className="rounded-xl px-4 py-10 sm:p-12 flex flex-col items-center justify-center text-center"
           style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
         >
           <div
@@ -225,7 +225,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
           <p className="text-xs mb-4" style={{ color: 'rgba(255,255,255,0.40)' }}>
             {filled} registered {filled === 1 ? 'player' : 'players'}
           </p>
-          <div className="grid grid-cols-6 gap-3">
+          <div className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-6">
             {Array.from({ length: displayCount }).map((_, i) => {
               const name = NAIJA_TAGS[i % NAIJA_TAGS.length]
               return (
@@ -261,7 +261,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
               </div>
             )}
             {filled === 0 && (
-              <div className="col-span-6 py-10 text-center">
+              <div className="col-span-full py-10 text-center">
                 <p className="text-sm" style={{ color: 'rgba(255,255,255,0.40)' }}>No registrations yet. Be the first to jump in.</p>
               </div>
             )}
@@ -271,7 +271,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
 
       {/* Tab: Prizes */}
       {activeTab === 'prizes' && (
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-3">
           {tournament.prizeBreakdown.map((p, i) => (
             <div
               key={i}
@@ -305,7 +305,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
       {related.length > 0 && (
         <div className="mt-10 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
           <h3 className="text-sm font-medium text-white mb-4">More in {tournament.vertical}</h3>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {related.map(t => (
               <Link key={t.id} href={`/compete/${t.id}`} className="block">
                 <TournamentCard

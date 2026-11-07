@@ -120,7 +120,7 @@ export default function CompeteClient() {
           to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
-      <div className="p-6 flex flex-col gap-8">
+      <div className="p-4 sm:p-6 min-w-0 flex flex-col gap-8">
 
         {/* Category rail */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
@@ -130,7 +130,7 @@ export default function CompeteClient() {
               <button
                 key={v.id}
                 onClick={() => handleVerticalChange(v.id)}
-                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all duration-200"
+                className="flex min-h-11 shrink-0 items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap lg:min-h-0 transition-all duration-200"
                 style={{
                   color:      isActive ? '#F0B429' : 'rgba(255,255,255,0.48)',
                   background: isActive ? 'rgba(240,180,41,0.10)' : 'transparent',
@@ -164,24 +164,24 @@ export default function CompeteClient() {
         </div>
 
         {/* Controls row */}
-        <div className="flex items-center">
-          <div className="flex-1">
+        <div className="flex min-w-0 flex-wrap items-center gap-3 xl:gap-0">
+          <div className="min-w-0 flex-1">
             <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.38)' }}>
               {isLoading ? ' ' : `${filtered.length} tournament${filtered.length !== 1 ? 's' : ''} open`}
             </span>
           </div>
 
-          <div className="flex justify-center flex-1">
-            <div className="relative w-96">
+          <div className="order-3 flex w-full min-w-0 justify-center xl:order-none xl:w-auto xl:flex-1">
+            <div className="relative w-full min-w-0 xl:max-w-96">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                 <HugeiconsIcon icon={Search01Icon} size={13} color="rgba(255,255,255,0.28)" strokeWidth={1.5} />
               </div>
               <input
                 type="text"
-                placeholder="Search by name or game..."
+                aria-label="Search tournaments" placeholder="Search by name or game..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full rounded-lg pl-9 py-2 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
+                className="min-h-11 w-full min-w-0 rounded-lg pl-9 py-2 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
                 style={{
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.09)',
@@ -201,12 +201,12 @@ export default function CompeteClient() {
             </div>
           </div>
 
-          <div className="flex-1 flex items-center justify-end">
+          <div className="flex min-w-0 items-center justify-end xl:flex-1">
             <div className="relative flex items-center">
               <select
                 value={sort}
                 onChange={e => setSort(e.target.value as typeof sort)}
-                className="rounded-lg text-xs outline-none cursor-pointer appearance-none"
+                aria-label="Sort tournaments" className="min-h-11 max-w-full rounded-lg text-xs outline-none cursor-pointer appearance-none lg:min-h-0"
                 style={{
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.09)',
@@ -232,7 +232,7 @@ export default function CompeteClient() {
 
         {/* Tournament grid */}
         {isLoading ? (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {Array.from({ length: 9 }).map((_, i) => <TournamentSkeleton key={i} />)}
           </div>
         ) : filtered.length === 0 ? (
@@ -259,7 +259,7 @@ export default function CompeteClient() {
           <>
             <div
               key={`${activeVertical}-${search}-${sort}`}
-              className="grid grid-cols-3 gap-3"
+              className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3"
               style={{ animation: 'kv-fade-up 0.28s ease both' }}
             >
               {visible.map(t => (
