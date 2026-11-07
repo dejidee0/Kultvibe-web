@@ -6,6 +6,6 @@ export const metadata: Metadata = {
   description: 'Watch live gaming, music, tech, and lifestyle streams from African creators. COD Mobile, PUBG, EA FC, Afrobeats and more.',
 }
 
-export default function StreamsPage({ searchParams }: { searchParams: { category?: string } }) {
-  return <StreamsClient initialCategory={searchParams.category} />
+export default async function StreamsPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
+  return <StreamsClient initialCategory={(await searchParams).category} />
 }

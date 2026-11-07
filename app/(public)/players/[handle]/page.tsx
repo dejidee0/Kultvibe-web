@@ -1,11 +1,11 @@
 import { getPlayerByHandle } from '@/lib/playersData'
 import { notFound } from 'next/navigation'
-import dynamic from 'next/dynamic'
+import PlayerProfileClient from './PlayerProfileLoader'
 import type { Metadata } from 'next'
 import type { PlayerData } from '@/lib/playersData'
 
-export function generateMetadata({ params }: { params: { handle: string } }): Metadata {
-  const player = getPlayerByHandle(params.handle)
+export async function generateMetadata({ params }: { params: Promise<{ handle: string }> }): Promise<Metadata> {
+  const player = getPlayerByHandle((await params).handle)
   if (!player) return { title: 'Player Not Found | KultVibe' }
   return {
     title: `${player.handle} — ${player.primaryGame} | KultVibe`,
@@ -13,13 +13,9 @@ export function generateMetadata({ params }: { params: { handle: string } }): Me
   }
 }
 
-const PlayerProfileClient = dynamic(() => import('./PlayerProfileClient'), {
-  ssr: false,
-  loading: () => <div className="flex-1 bg-kv-base animate-pulse" />,
-})
 
-export default function PlayerProfilePage({ params }: { params: { handle: string } }) {
-  const player = getPlayerByHandle(params.handle)
+export default async function PlayerProfilePage({ params }: { params: Promise<{ handle: string }> }) {
+  const player = getPlayerByHandle((await params).handle)
   if (!player) notFound()
   return <PlayerProfileClient player={player as PlayerData} />
 }

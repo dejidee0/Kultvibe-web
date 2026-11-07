@@ -1,6 +1,7 @@
+import type { ReactElement } from 'react'
 type Platform = 'instagram' | 'x' | 'tiktok' | 'discord' | 'youtube'
 
-const icons: Record<Platform, JSX.Element> = {
+const icons: Record<Platform, ReactElement> = {
   instagram: (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5" />
