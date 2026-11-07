@@ -28,7 +28,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
 
   return (
     <div className="flex flex-col">
-      <div className="w-full px-6 py-6 flex flex-col gap-0">
+      <div className="w-full min-w-0 p-4 sm:p-6 flex flex-col gap-0">
 
         {/* Banner */}
         <div className="relative">
@@ -48,7 +48,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
               }}
             />
             <div
-              className="absolute right-8 top-1/2 -translate-y-1/2 text-[80px] font-medium select-none"
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 text-[44px] sm:text-[80px] font-medium select-none"
               style={{ color: tc.text, opacity: 0.10 }}
             >
               {player.tier}
@@ -86,12 +86,12 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
 
         {/* Player info row */}
         <div
-          className="pt-16 pb-5 flex items-end justify-between"
+          className="pt-16 pb-5 flex min-w-0 flex-col items-start gap-4 xl:flex-row xl:items-end xl:justify-between"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
         >
           <div>
-            <div className="flex items-center gap-2 mb-1">
-              <h1 className="text-xl font-medium text-white">{player.displayName}</h1>
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <h1 className="text-xl font-medium text-white break-words">{player.displayName}</h1>
               <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} color="#F0B429" strokeWidth={1.5} />
               <span
                 className="text-xs px-2 py-0.5 rounded-md font-medium"
@@ -118,9 +118,9 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
             </div>
             <p className="text-sm mt-2" style={{ color: 'rgba(255,255,255,0.50)' }}>{player.bio}</p>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0 ml-6">
+          <div className="flex w-full items-center gap-2 xl:w-auto xl:flex-shrink-0 xl:ml-6">
             <button
-              className="text-xs px-4 py-2 rounded-lg transition-colors"
+              className="min-h-11 flex-1 text-xs px-4 py-2 rounded-lg transition-colors xl:flex-none lg:min-h-0"
               style={{ border: '1px solid rgba(255,255,255,0.20)', color: 'rgba(255,255,255,0.70)', background: 'transparent' }}
               onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.05)')}
               onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = 'transparent')}
@@ -128,7 +128,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
               Follow
             </button>
             <button
-              className="text-xs font-medium px-4 py-2 rounded-lg"
+              className="min-h-11 flex-1 text-xs font-medium px-4 py-2 rounded-lg xl:flex-none lg:min-h-0"
               style={{ background: '#F0B429', color: '#08080D' }}
               onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.background = '#D4A017')}
               onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = '#F0B429')}
@@ -141,7 +141,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
 
         {/* Stats strip */}
         <div
-          className="grid grid-cols-6"
+          className="grid min-w-0 grid-cols-2 sm:grid-cols-3 xl:grid-cols-6"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
         >
           {[
@@ -165,14 +165,14 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
 
         {/* Tab bar */}
         <div
-          className="flex items-center gap-1 pt-1"
+          className="flex max-w-full items-center gap-1 overflow-x-auto pt-1"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
         >
           {TABS.map(tab => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
-              className="px-4 py-2.5 text-xs font-medium transition-colors relative"
+              aria-pressed={activeTab === tab} onClick={() => setActiveTab(tab)}
+              className="min-h-11 shrink-0 px-3 sm:px-4 py-2.5 text-xs font-medium transition-colors relative"
               style={{ color: activeTab === tab ? '#F0B429' : 'rgba(255,255,255,0.40)' }}
             >
               {tab}
@@ -201,9 +201,9 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
 function OverviewTab({ player, setActiveTab }: { player: PlayerData; setActiveTab: (tab: Tab) => void }) {
   const tc = tierColors[player.tier]
   return (
-    <div className="grid grid-cols-3 gap-6 pt-6">
+    <div className="grid min-w-0 grid-cols-1 gap-6 pt-6 xl:grid-cols-3">
       {/* Left col */}
-      <div className="col-span-2 flex flex-col gap-4">
+      <div className="min-w-0 xl:col-span-2 flex flex-col gap-4">
 
         {/* Rank progress */}
         <div
@@ -247,7 +247,7 @@ function OverviewTab({ player, setActiveTab }: { player: PlayerData; setActiveTa
             {player.matchHistory.slice(0, 3).map((match, i) => (
               <div
                 key={match.id}
-                className="flex items-center justify-between py-2.5"
+                className="flex min-w-0 items-center justify-between gap-3 py-2.5"
                 style={{ borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}
               >
                 <div className="flex items-center gap-2">
@@ -263,7 +263,7 @@ function OverviewTab({ player, setActiveTab }: { player: PlayerData; setActiveTa
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-medium" style={{ color: match.result === 'win' ? '#10B981' : '#FF4D6D' }}>
+                  <p className="col-start-2 text-xs font-medium xl:col-auto" style={{ color: match.result === 'win' ? '#10B981' : '#FF4D6D' }}>
                     {match.result === 'win' ? 'WIN' : 'LOSS'}
                   </p>
                   {match.prize !== '—' && (
@@ -340,7 +340,7 @@ function MatchHistoryTab({ player }: { player: PlayerData }) {
         style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
       >
         <div
-          className="grid gap-4 px-5 py-3"
+          className="hidden gap-4 px-5 py-3 xl:grid"
           style={{
             gridTemplateColumns: '20px 1fr 120px 120px 100px 80px',
             borderBottom: '1px solid rgba(255,255,255,0.07)',
@@ -355,9 +355,8 @@ function MatchHistoryTab({ player }: { player: PlayerData }) {
         {player.matchHistory.map((match, i) => (
           <div
             key={match.id}
-            className="grid gap-4 px-5 py-3 items-center transition-colors"
+            className="grid grid-cols-[8px_minmax(0,1fr)] gap-x-3 gap-y-2 px-4 py-4 items-center transition-colors xl:grid-cols-[20px_minmax(0,1fr)_120px_120px_100px_80px] xl:gap-4 xl:px-5 xl:py-3"
             style={{
-              gridTemplateColumns: '20px 1fr 120px 120px 100px 80px',
               borderBottom: i < player.matchHistory.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
             }}
             onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.03)')}
@@ -373,10 +372,10 @@ function MatchHistoryTab({ player }: { player: PlayerData }) {
                 vs {match.opponent} · {match.date}
               </p>
             </div>
-            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.50)' }}>{match.game}</span>
-            <span className="text-xs" style={{ color: 'rgba(255,255,255,0.50)' }}>{match.round}</span>
-            <span className="text-xs" style={{ color: '#F0B429' }}>{match.prize}</span>
-            <span className="text-xs font-medium" style={{ color: match.result === 'win' ? '#10B981' : '#FF4D6D' }}>
+            <span className="col-start-2 text-xs xl:col-auto" style={{ color: 'rgba(255,255,255,0.50)' }}><span className="xl:hidden">Game: </span>{match.game}</span>
+            <span className="col-start-2 text-xs xl:col-auto" style={{ color: 'rgba(255,255,255,0.50)' }}><span className="xl:hidden">Round: </span>{match.round}</span>
+            <span className="col-start-2 text-xs xl:col-auto" style={{ color: '#F0B429' }}><span className="xl:hidden">Prize: </span>{match.prize}</span>
+            <span className="col-start-2 text-xs font-medium xl:col-auto" style={{ color: match.result === 'win' ? '#10B981' : '#FF4D6D' }}>
               {match.result === 'win' ? 'WIN' : 'LOSS'}
             </span>
           </div>
@@ -389,7 +388,7 @@ function MatchHistoryTab({ player }: { player: PlayerData }) {
 /* ---------- Achievements ---------- */
 function AchievementsTab({ player }: { player: PlayerData }) {
   return (
-    <div className="pt-6 grid grid-cols-4 gap-3">
+    <div className="pt-6 grid min-w-0 grid-cols-1 gap-3 min-[400px]:grid-cols-2 xl:grid-cols-4">
       {player.achievements.map(achievement => {
         const rarity = RARITY_COLORS[achievement.rarity]
         return (
