@@ -1,9 +1,10 @@
+import { brand } from '@/lib/brand'
 import type { Metadata } from 'next'
 import CreatorsClient from './CreatorsClient'
 
 export const metadata: Metadata = {
-  title: 'Creators | KultVibe',
-  description: 'Browse and follow the top African gaming creators, streamers, music producers, and tech builders on KultVibe.',
+  title: `Creators | ${brand.name}`,
+  description: brand.siteDescription,
 }
 
 export default function CreatorsPage() {

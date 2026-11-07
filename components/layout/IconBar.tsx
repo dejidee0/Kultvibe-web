@@ -1,5 +1,7 @@
 'use client';
 
+import { brand } from '@/lib/brand'
+
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -28,7 +30,7 @@ export default function IconBar() {
           >
             <img
               src="/logo.png"
-              alt="KultVibe"
+              alt={brand.name}
               width={40}
               height={40}
               style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }}

@@ -1,9 +1,10 @@
+import { brand } from '@/lib/brand'
 import type { Metadata } from 'next'
 import DiscoverClient from './DiscoverClient'
 
 export const metadata: Metadata = {
-  title: 'Discover | KultVibe',
-  description: 'Discover rising creators, trending streams, and upcoming tournaments across Africa\'s gaming and esports scene.',
+  title: `Discover | ${brand.name}`,
+  description: brand.siteDescription,
 }
 
 export default function DiscoverPage() {

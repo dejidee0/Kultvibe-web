@@ -1,3 +1,4 @@
+import { brand } from '@/lib/brand'
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -23,20 +24,20 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "KultVibe — Compete. Stream. Earn.",
-  description: "Africa's gaming and esports platform. Join tournaments, stream live, and earn across the continent.",
+  title: brand.siteTitle,
+  description: brand.siteDescription,
   openGraph: {
-    title: "KultVibe — Compete. Stream. Earn.",
-    description: "Africa's gaming and esports platform. Join tournaments, stream live, and earn across the continent.",
+    title: brand.siteTitle,
+    description: brand.siteDescription,
     url: "https://www.kultvibe.com",
-    siteName: "KultVibe",
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "KultVibe" }],
+    siteName: brand.name,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: brand.name }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "KultVibe — Compete. Stream. Earn.",
-    description: "Africa's gaming and esports platform. Join tournaments, stream live, and earn across the continent.",
+    title: brand.siteTitle,
+    description: brand.siteDescription,
     images: [OG_IMAGE],
   },
 };

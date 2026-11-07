@@ -1,10 +1,11 @@
+import { brand } from '@/lib/brand'
 import type { Metadata } from 'next'
 import React from 'react';
 import { Award01Icon } from '@hugeicons/core-free-icons';
 
 export const metadata: Metadata = {
-  title: 'KultVibe — Compete. Stream. Earn.',
-  description: "Africa's gaming and esports platform. Watch live streams, enter tournaments, climb the leaderboard, and earn across gaming, music, tech, and lifestyle.",
+  title: brand.siteTitle,
+  description: brand.siteDescription,
 }
 import SectionHeader from '@/components/ui/SectionHeader';
 import FeaturedStream from '@/components/stream/FeaturedStream';

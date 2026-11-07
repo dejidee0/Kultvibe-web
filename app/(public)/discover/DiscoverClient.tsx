@@ -1,5 +1,7 @@
 'use client'
 
+import { brand } from '@/lib/brand'
+
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -68,7 +70,7 @@ export default function DiscoverClient() {
 
         {/* Header */}
         <div className="flex min-w-0 flex-col gap-3 mb-2 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-white/40">Everything happening on KultVibe right now</p>
+          <p className="text-sm text-white/40">{brand.oneLiner}</p>
           <div
             className="flex max-w-full items-center overflow-x-auto rounded-lg p-1"
             style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
@@ -266,7 +268,7 @@ export default function DiscoverClient() {
           style={{ background: 'rgba(240,180,41,0.06)', border: '1px solid rgba(240,180,41,0.18)' }}
         >
           <p className="text-sm font-medium text-white mb-1">Join the arena</p>
-          <p className="text-xs text-white/40 mb-3">Compete, stream and earn across Africa</p>
+          <p className="text-xs text-white/40 mb-3">{brand.tagline}</p>
           <button
             onClick={() => openModal('register')}
             className="w-full text-xs font-medium py-2.5 rounded-lg transition-colors"

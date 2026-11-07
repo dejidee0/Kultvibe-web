@@ -1,5 +1,7 @@
 'use client';
 
+import { brand } from '@/lib/brand'
+
 import React from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { BellIcon } from '@hugeicons/core-free-icons';
@@ -66,7 +68,7 @@ export default function Topbar() {
           (e.currentTarget as HTMLButtonElement).style.background = '#F0B429';
         }}
       >
-        Join KultVibe
+        Join {brand.name}
       </button>
     </header>
   );

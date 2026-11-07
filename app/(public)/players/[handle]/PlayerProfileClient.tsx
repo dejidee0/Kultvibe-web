@@ -1,5 +1,7 @@
 'use client'
 
+import { brand } from '@/lib/brand'
+
 import React, { useState } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
@@ -59,7 +61,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
             >
               <HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} color="#F0B429" strokeWidth={1.5} />
               <span className="text-xs" style={{ color: 'rgba(255,255,255,0.70)' }}>
-                Ranked <span className="text-white font-medium">#{player.leaderboardRank}</span> on KultVibe
+                Ranked <span className="text-white font-medium">#{player.leaderboardRank}</span> on {brand.name}
               </span>
             </div>
           </div>

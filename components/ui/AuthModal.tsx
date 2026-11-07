@@ -1,5 +1,7 @@
 'use client';
 
+import { brand } from '@/lib/brand'
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HugeiconsIcon } from '@hugeicons/react';
@@ -87,13 +89,13 @@ export default function AuthModal() {
                 <div className="flex-shrink-0 overflow-hidden" style={{ width: 32, height: 32 }}>
                   <img
                     src="/logo.png"
-                    alt="KultVibe"
+                    alt={brand.name}
                     width={32}
                     height={32}
                     style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }}
                   />
                 </div>
-                <span className="text-base font-medium text-white">KultVibe</span>
+                <span className="text-base font-medium text-white">{brand.name}</span>
               </div>
 
               {/* Heading */}
@@ -102,8 +104,8 @@ export default function AuthModal() {
               </h2>
               <p className="text-xs text-white/40 text-center mb-6">
                 {modalView === 'register'
-                  ? 'Your Culture. Your Stage. Your Money.'
-                  : 'Sign in to your KultVibe account'}
+                  ? brand.tagline
+                  : `Sign in to your ${brand.name} account`}
               </p>
 
               {modalView === 'login' && <>

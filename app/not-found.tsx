@@ -1,8 +1,9 @@
+import { brand } from '@/lib/brand'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: '404 — Page Not Found | KultVibe',
+  title: `Page not found | ${brand.name}`,
 }
 
 export default function NotFound() {

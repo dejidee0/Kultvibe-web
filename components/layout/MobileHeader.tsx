@@ -1,4 +1,6 @@
 'use client';
+
+import { brand } from '@/lib/brand'
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,9 +14,9 @@ export default function MobileHeader() {
   return (
     <div className="shrink-0 bg-kv-base lg:hidden">
       <header className="flex h-12 items-center gap-1 border-b border-white/[0.06] px-3">
-        <Link href="/" aria-label="KultVibe home" className="flex h-11 w-11 shrink-0 items-center justify-center">
+        <Link href="/" aria-label={`${brand.name} home`} className="flex h-11 w-11 shrink-0 items-center justify-center">
           <span className="block h-10 w-10 overflow-hidden">
-            <Image src="/logo.png" alt="KultVibe" width={40} height={40} unoptimized style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }} />
+            <Image src="/logo.png" alt={brand.name} width={40} height={40} unoptimized style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }} />
           </span>
         </Link>
         <div className="min-w-0 flex-1" />
@@ -24,7 +26,7 @@ export default function MobileHeader() {
         <button type="button" aria-label="Notifications" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-white/40 hover:bg-white/[0.07] hover:text-white">
           <HugeiconsIcon icon={BellIcon} size={20} color="currentColor" strokeWidth={1.5} />
         </button>
-        <button type="button" onClick={() => openModal('register')} className="min-h-11 shrink-0 rounded-md bg-kv-gold px-3 text-xs font-semibold text-kv-base hover:bg-[#D4A017]">Join KultVibe</button>
+        <button type="button" onClick={() => openModal('register')} className="min-h-11 shrink-0 rounded-md bg-kv-gold px-3 text-xs font-semibold text-kv-base hover:bg-[#D4A017]">Join {brand.name}</button>
       </header>
       {searchOpen && (
         <div className="px-4 py-2">

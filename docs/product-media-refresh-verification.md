@@ -33,6 +33,14 @@ Applied compatible transitive updates and narrowly scoped overrides for the Type
 
 Sources: [Next.js security update](https://nextjs.org/blog/nextjs-security-update-october-14-2026), [Next.js 15 upgrade guide](https://nextjs.org/docs/app/guides/upgrading/version-15).
 
+## B2: one brand and copy source
+
+Created lib/brand.ts with the owner's exact product name, tagline, one-line description, metadata copy, three user types and descriptions, and interest labels/helper. Root and public route metadata, the auth modal, header branding and marketing CTAs use those constants. Player metadata explicitly identifies sample profiles as Preview instead of presenting invented achievements as real.
+
+TypeScript passes. ESLint passes with zero errors and the same 32 existing image warnings. The source scan for the old marketing wording returned zero hits. A zero-hit rg command exits 1 by convention; it was an empty result, not a failed content check.
+
+Left unchanged by instruction: logo asset bytes; all navigation/sidebar lists and their destinations; sidebarData categories; lib/constants CATEGORIES; StreamsClient CATEGORIES; CompeteClient VERTICALS; LeaderboardsClient VERTICAL_OPTIONS; creator/discover filter categories; and community category/room data. Sample fixture names remain fixture data. These lists await the owner's separate decision.
+
 ## Remaining steps
 
 B1 through B8 remain pending. Part C remains gated on Part B.

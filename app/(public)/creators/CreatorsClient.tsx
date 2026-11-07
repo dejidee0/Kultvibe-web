@@ -1,5 +1,7 @@
 'use client'
 
+import { brand } from '@/lib/brand'
+
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -321,7 +323,7 @@ export default function CreatorsClient() {
             </div>
             <h3 className="text-xl font-medium text-white mb-2">Find your next creator partner</h3>
             <p className="text-sm max-w-md" style={{ color: 'rgba(255,255,255,0.50)' }}>
-              Connect with Africa&apos;s top gaming, music, and lifestyle creators. Run sponsored tournaments, brand activations, and content campaigns on KultVibe.
+              {brand.userTypes.Brand.description}
             </p>
           </div>
 
