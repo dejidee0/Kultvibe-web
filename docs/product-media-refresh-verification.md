@@ -41,6 +41,14 @@ TypeScript passes. ESLint passes with zero errors and the same 32 existing image
 
 Left unchanged by instruction: logo asset bytes; all navigation/sidebar lists and their destinations; sidebarData categories; lib/constants CATEGORIES; StreamsClient CATEGORIES; CompeteClient VERTICALS; LeaderboardsClient VERTICAL_OPTIONS; creator/discover filter categories; and community category/room data. Sample fixture names remain fixture data. These lists await the owner's separate decision.
 
+## B3: user-type waitlist form
+
+The register modal starts with accessible native radio options for Gamer, Creator and Brand, defaulting to Gamer and using the approved descriptions. Gamer has an optional main game; Brand requires a company name; Creator has no extra field. Music, Tech and Lifestyle are optional checkbox chips capped at three. Requests use the generated schema and omit primaryVertical and inactive conditional fields.
+
+The modal uses 16px inputs, 44px targets, inner scrolling, focus containment/restoration and Escape dismissal. It shows API field errors, duplicate/rate/network messages, and the API success message. Existing account actions explicitly explain that accounts open at launch and do not make authentication requests. Removed the obsolete frontend vertical-selector exports; the generated legacy API field remains for compatibility.
+
+TypeScript and lint pass with zero errors and 32 existing image warnings. The full mocked form/error/viewport matrix is still required by B7 before any frontend production merge.
+
 ## Remaining steps
 
 B1 through B8 remain pending. Part C remains gated on Part B.

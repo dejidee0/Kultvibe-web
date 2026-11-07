@@ -4,10 +4,6 @@ export type WaitlistSignup = components['schemas']['WaitlistSignupRequest']
 type SignupEnvelope = paths['/api/waitlist']['post']['responses'][201]['content']['application/json']
 export type WaitlistSignupResult = NonNullable<SignupEnvelope['data']>
 
-// Retained until the registration UI switches to user types in B3.
-export const waitlistVerticals = ['Gaming', 'Tech', 'Music', 'Lifestyle', 'Streaming', 'Creator'] as const
-export type WaitlistVertical = typeof waitlistVerticals[number]
-
 export class WaitlistApiError extends Error {
   readonly fieldErrors: Partial<Record<keyof WaitlistSignup, string>> = {}
 
