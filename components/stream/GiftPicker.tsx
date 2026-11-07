@@ -1,5 +1,6 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 import { useGiftStore, GIFTS } from '@/store/useGiftStore'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { Cancel01Icon } from '@hugeicons/core-free-icons'
@@ -16,6 +17,13 @@ const DEMO_SENDERS = [
 
 export default function GiftPicker() {
   const { isPickerOpen, closePicker, sendGift } = useGiftStore()
+  const panelRef = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!isPickerOpen) return
+    const previous = document.activeElement as HTMLElement | null
+    panelRef.current?.querySelector<HTMLButtonElement>('button')?.focus()
+    return () => previous?.focus()
+  }, [isPickerOpen])
 
   const handleSend = (gift: (typeof GIFTS)[0]) => {
     const randomSender = DEMO_SENDERS[Math.floor(Math.random() * DEMO_SENDERS.length)]
@@ -32,25 +40,35 @@ export default function GiftPicker() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closePicker}
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-40 bg-black/60"
           />
 
           {/* Picker Panel */}
           <motion.div
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Send a gift"
+            className="fixed inset-x-3 bottom-[calc(80px+env(safe-area-inset-bottom))] z-50 mx-auto max-h-[calc(100dvh-7rem)] max-w-[360px] overflow-y-auto lg:absolute lg:inset-x-auto lg:bottom-[60px] lg:right-3 lg:mx-0 lg:w-[280px]"
+            onKeyDown={event => {
+              if (event.key === 'Escape') { event.preventDefault(); closePicker() }
+              if (event.key === 'Tab') {
+                const controls = panelRef.current?.querySelectorAll<HTMLButtonElement>('button')
+                if (!controls?.length) return
+                const first = controls[0], last = controls[controls.length - 1]
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
+                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+              }
+            }}
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.15 }}
             style={{
-              position: 'absolute',
-              bottom: '60px',
-              right: '12px',
-              zIndex: 50,
               background: '#0D0D14',
               border: '0.5px solid rgba(255,255,255,0.12)',
               borderRadius: '16px',
               padding: '16px',
-              width: '280px',
             }}
           >
             {/* VC Balance */}
@@ -81,12 +99,15 @@ export default function GiftPicker() {
                 Send a gift
               </span>
               <button
-                onClick={closePicker}
+                aria-label="Close gift picker" onClick={closePicker}
                 style={{
                   color: 'rgba(255,255,255,0.3)',
                   cursor: 'pointer',
                   background: 'none',
                   border: 'none',
+                  minWidth: 44,
+                  minHeight: 44,
+                  justifyContent: 'center',
                   padding: 0,
                   display: 'flex',
                   alignItems: 'center',

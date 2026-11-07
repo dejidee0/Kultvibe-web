@@ -113,7 +113,7 @@ export default function LiveChat() {
               <span style={{ color: 'rgba(255,255,255,0.5)', marginLeft: '4px' }}>{msg.text}</span>
             </div>
           ) : (
-            <div key={msg.id} className="flex gap-2 items-start">
+            <div key={msg.id} className="flex min-w-0 flex-wrap gap-x-2 gap-y-1 items-start">
               <span
                 className="font-semibold flex-shrink-0"
                 style={{ fontSize: 11, color: msg.color }}
@@ -142,16 +142,16 @@ export default function LiveChat() {
         >
           <input
             type="text"
-            placeholder="Say something..."
-            className="flex-1 bg-transparent text-xs text-white placeholder:text-white/30 focus:outline-none min-w-0"
+            aria-label="Live chat message" placeholder="Say something..."
+            className="min-h-11 flex-1 bg-transparent text-xs text-white placeholder:text-white/30 focus:outline-none min-w-0"
           />
           <button
-            onClick={openPicker}
-            className="text-yellow-400 hover:text-yellow-300 transition-colors flex-shrink-0"
+            aria-label="Send a gift" onClick={openPicker}
+            className="flex h-11 w-11 items-center justify-center text-yellow-400 hover:text-yellow-300 transition-colors flex-shrink-0 lg:h-auto lg:w-auto"
           >
             <HugeiconsIcon icon={GiftIcon} size={16} color="currentColor" strokeWidth={1.5} />
           </button>
-          <button className="flex-shrink-0 text-white/40 hover:text-white transition-colors">
+          <button aria-label="Send chat message" className="flex h-11 w-11 items-center justify-center flex-shrink-0 text-white/40 hover:text-white transition-colors lg:h-auto lg:w-auto">
             <HugeiconsIcon icon={Sent02Icon} size={16} color="currentColor" strokeWidth={1.5} />
           </button>
         </div>

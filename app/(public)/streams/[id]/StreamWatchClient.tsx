@@ -51,6 +51,7 @@ function CheckIcon() {
 export default function StreamWatchClient({ stream }: { stream: StreamData }) {
   const [isMuted, setIsMuted] = useState(true)
   const [theatreMode, setTheatreMode] = useState(false)
+  const [mobilePanel, setMobilePanel] = useState<'about' | 'chat'>('chat')
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { openPicker } = useGiftStore()
@@ -72,16 +73,16 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
   const goalPct = Math.min(100, (stream.goal.current / stream.goal.target) * 100)
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex min-w-0 flex-col lg:h-full lg:flex-row lg:overflow-hidden">
 
       {/* ---- Main column ---- */}
-      <div className={`flex flex-col flex-1 overflow-hidden no-scrollbar ${!theatreMode ? 'overflow-y-auto' : ''}`}>
+      <div className={`flex min-w-0 flex-col lg:flex-1 lg:overflow-hidden no-scrollbar ${!theatreMode ? 'lg:overflow-y-auto' : ''}`}>
 
         {/* Video area */}
         {stream.isLive ? (
           <div
             ref={containerRef}
-            className={`relative flex-shrink-0 group bg-black ${theatreMode ? 'flex-1' : 'h-[480px]'}`}
+            className={`relative aspect-video w-full flex-shrink-0 group bg-black lg:aspect-auto ${theatreMode ? 'lg:flex-1' : 'lg:h-[480px]'}`}
           >
             {stream.videoSrc ? (
               <video
@@ -132,26 +133,26 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
             {/* Bottom-right controls */}
             <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1">
               <button
-                onClick={() => setIsMuted(m => !m)}
-                className="p-2 rounded-lg transition-colors text-white/60 hover:text-white hover:bg-white/10"
+                aria-label={isMuted ? 'Unmute stream' : 'Mute stream'} onClick={() => setIsMuted(m => !m)}
+                className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors text-white/60 lg:h-auto lg:w-auto lg:p-2 hover:text-white hover:bg-white/10"
               >
                 <HugeiconsIcon icon={isMuted ? VolumeOffIcon : VolumeHighIcon} size={16} color="currentColor" strokeWidth={1.5} />
               </button>
               <button
-                onClick={openPicker}
-                className="p-2 rounded-lg transition-colors text-white/60 hover:text-white hover:bg-white/10"
+                aria-label="Send a gift" onClick={openPicker}
+                className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors text-white/60 lg:h-auto lg:w-auto lg:p-2 hover:text-white hover:bg-white/10"
               >
                 <HugeiconsIcon icon={GiftIcon} size={16} color="currentColor" strokeWidth={1.5} />
               </button>
               <button
-                onClick={toggleFullscreen}
-                className="p-2 rounded-lg transition-colors text-white/60 hover:text-white hover:bg-white/10"
+                aria-label="Fullscreen stream" onClick={toggleFullscreen}
+                className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors text-white/60 lg:h-auto lg:w-auto lg:p-2 hover:text-white hover:bg-white/10"
               >
                 <HugeiconsIcon icon={FullScreenIcon} size={16} color="currentColor" strokeWidth={1.5} />
               </button>
               <button
-                onClick={() => setTheatreMode(t => !t)}
-                className={`p-2 rounded-lg transition-colors ${theatreMode ? 'text-yellow-400 bg-yellow-500/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+                aria-label="Toggle theatre mode" onClick={() => setTheatreMode(t => !t)}
+                className={`hidden p-2 rounded-lg transition-colors lg:block ${theatreMode ? 'text-yellow-400 bg-yellow-500/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
               >
                 <HugeiconsIcon icon={SidebarRightIcon} size={16} color="currentColor" strokeWidth={1.5} />
               </button>
@@ -174,7 +175,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
           </div>
         ) : (
           <div
-            className="relative h-[480px] flex flex-col items-center justify-center gap-4"
+            className="relative min-h-[280px] px-4 py-6 lg:h-[480px] flex flex-shrink-0 flex-col items-center justify-center gap-4"
             style={{ background: 'linear-gradient(135deg, #0D0D14, #111118)' }}
           >
             <img
@@ -213,7 +214,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
           <>
             {/* Streamer info bar */}
             <div
-              className="flex items-center justify-between px-5 py-3 flex-shrink-0"
+              className="flex min-w-0 flex-col items-stretch gap-3 px-4 py-3 flex-shrink-0 xl:flex-row xl:items-center xl:justify-between xl:px-5"
               style={{
                 background: 'rgba(13,13,20,0.85)',
                 backdropFilter: 'blur(16px)',
@@ -221,7 +222,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
                 borderBottom: '1px solid rgba(255,255,255,0.07)',
               }}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 flex-wrap items-center gap-3">
                 <img
                   src={`https://api.dicebear.com/7.x/bottts/svg?seed=${stream.streamer}&backgroundColor=0D0D14`}
                   loading="lazy"
@@ -231,7 +232,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
                   alt={stream.streamer}
                 />
                 <div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex min-w-0 flex-wrap items-center gap-1.5">
                     <Link href={`/players/${stream.id}`} className="text-base font-semibold text-white hover:text-[#F0B429] transition-colors">{stream.streamer}</Link>
                     <CheckIcon />
                     {stream.isLive && (
@@ -247,15 +248,15 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
                   {stream.game}
                 </span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex min-w-0 items-center gap-2">
                 <button
-                  className="text-xs text-white/70 rounded-md px-4 py-1.5 transition-colors hover:bg-white/5"
+                  className="min-h-11 flex-1 text-xs text-white/70 rounded-md px-4 py-1.5 xl:flex-none lg:min-h-0 transition-colors hover:bg-white/5"
                   style={{ border: '1px solid rgba(255,255,255,0.15)' }}
                 >
                   Follow
                 </button>
                 <button
-                  className="text-xs font-medium px-4 py-1.5 rounded-md transition-colors"
+                  className="min-h-11 flex-1 text-xs font-medium px-4 py-1.5 rounded-md xl:flex-none lg:min-h-0 transition-colors"
                   style={{ background: '#F0B429', color: '#08080D' }}
                   onMouseEnter={e => (e.currentTarget.style.background = '#D4A017')}
                   onMouseLeave={e => (e.currentTarget.style.background = '#F0B429')}
@@ -265,15 +266,20 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
               </div>
             </div>
 
+            <div className="grid grid-cols-2 gap-2 border-b border-white/10 p-3 lg:hidden" role="group" aria-label="Stream panels">
+              <button type="button" aria-pressed={mobilePanel === 'chat'} onClick={() => setMobilePanel('chat')} className={'min-h-11 rounded-lg text-sm ' + (mobilePanel === 'chat' ? 'bg-kv-gold/15 text-kv-gold' : 'text-white/50')}>{stream.isLive ? 'Live chat' : 'Stream activity'}</button>
+              <button type="button" aria-pressed={mobilePanel === 'about'} onClick={() => setMobilePanel('about')} className={'min-h-11 rounded-lg text-sm ' + (mobilePanel === 'about' ? 'bg-kv-gold/15 text-kv-gold' : 'text-white/50')}>About</button>
+            </div>
+
             {/* About section */}
             <div
-              className="px-5 py-5 flex-shrink-0"
+              className={`min-w-0 px-4 sm:px-5 py-5 flex-shrink-0 ${mobilePanel === 'about' ? 'block' : 'hidden lg:block'}`}
               style={{
                 background: '#111118',
                 borderBottom: '1px solid rgba(255,255,255,0.07)',
               }}
             >
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
                 <h3 className="text-sm font-semibold text-white">About {stream.streamer}</h3>
                 <CheckIcon />
                 <span className="text-xs text-white/35">· {stream.followers} followers</span>
@@ -303,7 +309,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
                   border: '1px solid rgba(255,255,255,0.07)',
                 }}
               >
-                <div className="flex items-center justify-between mb-2.5">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
                   <span className="text-xs text-white/55">{stream.goal.label}</span>
                   <span className="text-xs font-semibold text-white">
                     {stream.goal.current.toLocaleString()} / {stream.goal.target.toLocaleString()}
@@ -323,11 +329,11 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
 
             {/* Related streams */}
             <div
-              className="px-5 py-5"
+              className={`min-w-0 px-4 sm:px-5 py-5 ${mobilePanel === 'about' ? 'block' : 'hidden lg:block'}`}
               style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
             >
               <h3 className="text-sm font-semibold text-white mb-3">More like this</h3>
-              <div className="grid grid-cols-4 gap-3">
+              <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 2xl:grid-cols-4">
                 {related.map(s => (
                   <StreamCard
                     key={s.id}
@@ -352,8 +358,9 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
       {/* ---- Chat sidebar ---- */}
       {(!theatreMode || !stream.isLive) && (
         <aside
-          className="flex-shrink-0 flex flex-col overflow-hidden"
-          style={{ width: 320, borderLeft: '1px solid rgba(255,255,255,0.07)' }}
+          className={`h-[420px] w-full min-w-0 flex-shrink-0 flex-col overflow-hidden sm:h-[480px] lg:h-auto lg:w-[320px] ${mobilePanel === 'chat' ? 'flex' : 'hidden lg:flex'}`}
+          aria-label={stream.isLive ? 'Live chat' : 'Stream activity'}
+          style={{ borderLeft: '1px solid rgba(255,255,255,0.07)' }}
         >
           {stream.isLive ? (
             <LiveChat />
