@@ -1,53 +1,62 @@
+import type { components, paths } from '@/lib/api/types'
+
+export type WaitlistSignup = components['schemas']['WaitlistSignupRequest']
+type SignupEnvelope = paths['/api/waitlist']['post']['responses'][201]['content']['application/json']
+export type WaitlistSignupResult = NonNullable<SignupEnvelope['data']>
+
+// Retained until the registration UI switches to user types in B3.
 export const waitlistVerticals = ['Gaming', 'Tech', 'Music', 'Lifestyle', 'Streaming', 'Creator'] as const
 export type WaitlistVertical = typeof waitlistVerticals[number]
 
-export interface WaitlistSignup {
-  fullName: string
-  email: string
-  gamerTag?: string
-  primaryVertical: WaitlistVertical
+export class WaitlistApiError extends Error {
+  readonly fieldErrors: Partial<Record<keyof WaitlistSignup, string>> = {}
+
+  constructor(message: string, readonly status = 0, readonly errors: string[] = []) {
+    super(message)
+    this.name = 'WaitlistApiError'
+    const fields: [RegExp, keyof WaitlistSignup][] = [
+      [/full.?name/i, 'fullName'], [/email/i, 'email'], [/user.?type/i, 'userType'],
+      [/company/i, 'companyName'], [/primary.?game|main game/i, 'primaryGame'],
+      [/interest/i, 'interests'], [/gamer.?tag/i, 'gamerTag'],
+    ]
+    for (const error of errors) {
+      const field = fields.find(([pattern]) => pattern.test(error))?.[1]
+      if (field && !this.fieldErrors[field]) this.fieldErrors[field] = error
+    }
+  }
 }
 
-interface SignupResult {
-  id: string
-  email: string
-  message: string
-}
-
-export async function joinWaitlist(signup: WaitlistSignup): Promise<SignupResult> {
-  // Call the API from the browser so RemoteIpAddress remains per visitor.
+export async function joinWaitlist(signup: WaitlistSignup): Promise<WaitlistSignupResult> {
+  // Browser requests preserve the API's per-visitor IP rate limit.
   const baseUrl = (process.env.NEXT_PUBLIC_API_BASE_URL ||
     (process.env.NODE_ENV === 'development' ? 'http://localhost:5080' : '')).replace(/\/+$/, '')
-  if (!baseUrl) throw new Error('Waitlist signups are temporarily unavailable. Please try again later.')
+  if (!baseUrl) throw new WaitlistApiError('Waitlist signups are temporarily unavailable. Please try again later.')
 
   let response: Response
   try {
     response = await fetch(`${baseUrl}/api/waitlist`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'omit',
-      body: JSON.stringify(signup),
-      signal: AbortSignal.timeout(30000),
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'omit',
+      body: JSON.stringify(signup), signal: AbortSignal.timeout(30000),
     })
   } catch {
-    throw new Error('We could not confirm your signup. Please check your connection and try again.')
+    throw new WaitlistApiError('We could not confirm your signup. Please check your connection and try again.')
   }
 
-  const payload: unknown = await response.json().catch(() => null)
-  const envelope = payload && typeof payload === 'object' ? payload as Record<string, unknown> : null
-  const data = envelope?.data && typeof envelope.data === 'object'
-    ? envelope.data as Record<string, unknown> : null
-
+  const raw: unknown = await response.json().catch(() => null)
+  const envelope = raw && typeof raw === 'object' ? raw as Partial<SignupEnvelope> : null
+  const data = envelope?.data
   if (response.status === 201 && envelope?.success === true &&
       typeof data?.id === 'string' && typeof data.email === 'string') {
-    return { id: data.id, email: data.email, message: typeof data.message === 'string' ? data.message : "You're on the list!" }
+    return { ...data, message: data.message || envelope.message || "You're on the list!" }
   }
-  if (response.status === 409) throw new Error('This email is already on the waitlist.')
-  if (response.status === 429) throw new Error('Too many signup attempts. Please try again later.')
+  const message = typeof envelope?.message === 'string' ? envelope.message : ''
+  if (response.status === 409) throw new WaitlistApiError(message || 'This email is already on the waitlist.', 409)
+  if (response.status === 429) throw new WaitlistApiError(message || 'Too many signup attempts. Please try again later.', 429)
   if (response.status === 400) {
-    const errors = Array.isArray(envelope?.errors)
-      ? envelope.errors.filter((error): error is string => typeof error === 'string') : []
-    throw new Error(errors.length ? errors.join('\n') : 'Please check your details and try again.')
+    const errors: unknown = envelope?.errors
+    const values = Array.isArray(errors) ? errors : errors && typeof errors === 'object' ? Object.values(errors).flat() : []
+    const messages = values.filter((error): error is string => typeof error === 'string')
+    throw new WaitlistApiError(messages.join('\n') || message || 'Please check your details and try again.', 400, messages)
   }
-  throw new Error('Waitlist signups are temporarily unavailable. Please try again later.')
+  throw new WaitlistApiError('Waitlist signups are temporarily unavailable. Please try again later.', response.status)
 }
