@@ -172,7 +172,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
             <button
               key={tab}
               aria-pressed={activeTab === tab} onClick={() => setActiveTab(tab)}
-              className="min-h-11 shrink-0 px-3 sm:px-4 py-2.5 text-xs font-medium transition-colors relative"
+              className="min-h-11 lg:min-h-0 shrink-0 px-3 sm:px-4 py-2.5 text-xs font-medium transition-colors relative"
               style={{ color: activeTab === tab ? '#F0B429' : 'rgba(255,255,255,0.40)' }}
             >
               {tab}

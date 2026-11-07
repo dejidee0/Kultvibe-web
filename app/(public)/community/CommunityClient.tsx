@@ -307,7 +307,7 @@ export default function CommunityClient() {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                 aria-label={`Message ${currentRoom.name}`} placeholder={`Message ${currentRoom.name}...`}
-                className="min-h-11 min-w-0 w-full rounded-lg px-3 py-2.5 text-sm text-white outline-none transition-colors pr-10"
+                className="min-h-11 lg:min-h-0 min-w-0 w-full rounded-lg px-3 py-2.5 text-sm text-white outline-none transition-colors pr-10"
                 style={{
                   ...bgWhite6,
                   border: '1px solid rgba(255,255,255,0.10)',

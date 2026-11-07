@@ -73,7 +73,7 @@ export default function LeaderboardsClient() {
               <button
                 key={period}
                 onClick={() => setTimePeriod(period)}
-                className="min-h-11 min-w-0 flex-1 px-3 py-1.5 rounded-md text-xs font-medium transition-colors lg:min-h-0"
+                className="min-h-11 min-w-0 flex-1 xl:flex-none xl:whitespace-nowrap px-3 py-1.5 rounded-md text-xs font-medium transition-colors lg:min-h-0"
                 style={{
                   background: timePeriod === period ? 'rgba(240,180,41,0.15)' : 'transparent',
                   color:      timePeriod === period ? '#F0B429' : 'rgba(255,255,255,0.40)',
@@ -230,7 +230,7 @@ export default function LeaderboardsClient() {
               <span className="col-start-2 text-xs xl:col-auto" style={{ color: 'rgba(255,255,255,0.50)' }}><span className="xl:hidden">Win rate: </span>{player.winRate}</span>
 
               <span
-                className="col-start-2 justify-self-start text-[10px] font-medium px-2 py-1 rounded-md inline-block xl:col-auto"
+                className="col-start-2 justify-self-start text-[10px] font-medium px-2 py-1 rounded-md inline-block xl:col-auto xl:justify-self-stretch"
                 style={{
                   background: tierColors[player.tier].bg,
                   color:      tierColors[player.tier].text,
@@ -300,7 +300,7 @@ export default function LeaderboardsClient() {
         </div>
         <button
           onClick={() => openModal('register')}
-          className="min-h-11 shrink-0 text-[#08080D] text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
+          className="min-h-11 lg:min-h-0 shrink-0 text-[#08080D] text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
           style={{ background: '#F0B429' }}
           onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.background = '#D4A017')}
           onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = '#F0B429')}

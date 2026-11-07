@@ -333,7 +333,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
               style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
             >
               <h3 className="text-sm font-semibold text-white mb-3">More like this</h3>
-              <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 2xl:grid-cols-4">
+              <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {related.map(s => (
                   <StreamCard
                     key={s.id}

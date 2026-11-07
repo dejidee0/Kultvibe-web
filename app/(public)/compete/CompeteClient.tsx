@@ -171,7 +171,7 @@ export default function CompeteClient() {
             </span>
           </div>
 
-          <div className="order-3 flex w-full min-w-0 justify-center xl:order-none xl:w-auto xl:flex-1">
+          <div className="order-3 flex w-full min-w-0 justify-center xl:order-none xl:w-auto xl:flex-1 xl:min-w-[384px]">
             <div className="relative w-full min-w-0 xl:max-w-96">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
                 <HugeiconsIcon icon={Search01Icon} size={13} color="rgba(255,255,255,0.28)" strokeWidth={1.5} />
@@ -181,7 +181,7 @@ export default function CompeteClient() {
                 aria-label="Search tournaments" placeholder="Search by name or game..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="min-h-11 w-full min-w-0 rounded-lg pl-9 py-2 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
+                className="min-h-11 lg:min-h-0 w-full min-w-0 rounded-lg pl-9 py-2 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
                 style={{
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid rgba(255,255,255,0.09)',

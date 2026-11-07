@@ -143,7 +143,7 @@ export default function LiveChat() {
           <input
             type="text"
             aria-label="Live chat message" placeholder="Say something..."
-            className="min-h-11 flex-1 bg-transparent text-xs text-white placeholder:text-white/30 focus:outline-none min-w-0"
+            className="min-h-11 lg:min-h-0 flex-1 bg-transparent text-xs text-white placeholder:text-white/30 focus:outline-none min-w-0"
           />
           <button
             aria-label="Send a gift" onClick={openPicker}
