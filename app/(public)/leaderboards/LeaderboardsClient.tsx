@@ -61,19 +61,19 @@ export default function LeaderboardsClient() {
   const risingStars = leaderboardData.filter(p => p.trend === 'up')
 
   return (
-    <div className="p-6 flex flex-col gap-8">
+    <div className="p-4 sm:p-6 min-w-0 flex flex-col gap-8">
 
       {/* Filters */}
-      <div className="flex items-center justify-between">
+      <div className="flex min-w-0 flex-col items-stretch gap-3 xl:flex-row xl:items-center xl:justify-between">
           <div
-            className="flex items-center rounded-lg p-1"
+            className="flex max-w-full items-center rounded-lg p-1"
             style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
           >
             {(['This Week', 'This Month', 'All Time'] as TimePeriod[]).map(period => (
               <button
                 key={period}
                 onClick={() => setTimePeriod(period)}
-                className="px-3 py-1.5 rounded-md text-xs font-medium transition-colors"
+                className="min-h-11 min-w-0 flex-1 xl:flex-none xl:whitespace-nowrap px-3 py-1.5 rounded-md text-xs font-medium transition-colors lg:min-h-0"
                 style={{
                   background: timePeriod === period ? 'rgba(240,180,41,0.15)' : 'transparent',
                   color:      timePeriod === period ? '#F0B429' : 'rgba(255,255,255,0.40)',
@@ -85,11 +85,11 @@ export default function LeaderboardsClient() {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <select
-              value={vertical}
+              aria-label="Leaderboard vertical" value={vertical}
               onChange={e => setVertical(e.target.value)}
-              className="rounded-lg px-3 py-2 text-xs cursor-pointer"
+              className="min-h-11 min-w-0 flex-1 rounded-lg px-3 py-2 text-xs cursor-pointer sm:flex-none lg:min-h-0"
               style={SELECT_STYLE}
             >
               {VERTICAL_OPTIONS.map(o => (
@@ -97,9 +97,9 @@ export default function LeaderboardsClient() {
               ))}
             </select>
             <select
-              value={city}
+              aria-label="Leaderboard region" value={city}
               onChange={e => setCity(e.target.value)}
-              className="rounded-lg px-3 py-2 text-xs cursor-pointer"
+              className="min-h-11 min-w-0 flex-1 rounded-lg px-3 py-2 text-xs cursor-pointer sm:flex-none lg:min-h-0"
               style={SELECT_STYLE}
             >
               {CITY_OPTIONS.map(o => (
@@ -111,7 +111,7 @@ export default function LeaderboardsClient() {
 
       {/* Podium */}
       {top3.length >= 3 && (
-        <div className="flex items-end justify-center gap-4">
+        <div className="flex min-w-0 items-end justify-center gap-2 sm:gap-4">
           {[1, 0, 2].map(index => {
             const player  = top3[index]
             const isFirst = index === 0
@@ -119,7 +119,7 @@ export default function LeaderboardsClient() {
             return (
               <div
                 key={player.rank}
-                className="flex flex-col items-center"
+                className="flex min-w-0 max-w-[160px] flex-1 flex-col items-center"
                 style={{ order: isFirst ? 2 : index === 1 ? 1 : 3 }}
               >
                 <div className={`relative mb-3 ${isFirst ? 'mt-0' : 'mt-8'}`}>
@@ -141,7 +141,7 @@ export default function LeaderboardsClient() {
                 </div>
 
                 <div
-                  className="w-[160px] rounded-t-xl flex flex-col items-center pt-6 pb-4 px-4"
+                  className="w-full min-h-[148px] rounded-t-xl flex flex-col items-center pt-3 pb-3 px-1 sm:pt-6 sm:pb-4 sm:px-4 xl:min-h-0"
                   style={{
                     height:      isFirst ? 160 : index === 1 ? 120 : 100,
                     background:  isFirst ? 'rgba(240,180,41,0.08)' : 'rgba(255,255,255,0.04)',
@@ -150,14 +150,14 @@ export default function LeaderboardsClient() {
                     borderRight: `1px solid ${isFirst ? 'rgba(240,180,41,0.20)' : 'rgba(255,255,255,0.08)'}`,
                   }}
                 >
-                  <Link href={`/players/${player.name.replace('@', '')}`}>
-                    <p className="text-sm font-medium text-white mb-0.5 truncate w-full text-center hover:text-[#F0B429] transition-colors">{player.name}</p>
+                  <Link href={`/players/${player.name.replace('@', '')}`} className="max-w-full">
+                    <p className="text-xs sm:text-sm font-medium text-white mb-0.5 truncate w-full text-center hover:text-[#F0B429] transition-colors">{player.name}</p>
                   </Link>
                   <p className="text-[10px] mb-2" style={{ color: 'rgba(255,255,255,0.40)' }}>{player.city}</p>
                   <span className="text-xs font-medium" style={{ color: tierColors[player.tier].text }}>
                     {player.tier}
                   </span>
-                  <p className="text-base font-medium mt-auto" style={{ color: '#F0B429' }}>
+                  <p className="text-sm sm:text-base font-medium mt-auto" style={{ color: '#F0B429' }}>
                     ₦{getEarnings(player, timePeriod).toLocaleString()}
                   </p>
                 </div>
@@ -174,7 +174,7 @@ export default function LeaderboardsClient() {
           style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
         >
           <div
-            className="grid gap-4 px-5 py-3"
+            className="hidden gap-4 px-5 py-3 xl:grid"
             style={{
               gridTemplateColumns: '40px 1fr 120px 100px 80px 100px 80px',
               borderBottom: '1px solid rgba(255,255,255,0.07)',
@@ -190,9 +190,8 @@ export default function LeaderboardsClient() {
           {tableRows.map((player, i) => (
             <div
               key={player.rank}
-              className="grid gap-4 px-5 py-3 items-center transition-colors cursor-default"
+              className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-x-3 gap-y-2 px-4 py-4 items-center transition-colors cursor-default xl:grid-cols-[40px_minmax(0,1fr)_120px_100px_80px_100px_80px] xl:gap-4 xl:px-5 xl:py-3"
               style={{
-                gridTemplateColumns: '40px 1fr 120px 100px 80px 100px 80px',
                 borderBottom: i < tableRows.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
               }}
               onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.03)')}
@@ -219,18 +218,19 @@ export default function LeaderboardsClient() {
                 </div>
               </Link>
 
-              <span className="text-xs truncate" style={{ color: 'rgba(255,255,255,0.50)' }}>{player.game}</span>
+              <span className="col-start-2 text-xs xl:col-auto" style={{ color: 'rgba(255,255,255,0.50)' }}><span className="xl:hidden">Game: </span>{player.game}</span>
 
-              <span className="text-sm font-medium" style={{ color: '#F0B429' }}>
+              <span className="col-start-2 text-sm font-medium xl:col-auto" style={{ color: '#F0B429' }}>
+                <span className="xl:hidden">Earnings: </span>
                 ₦{getEarnings(player, timePeriod).toLocaleString()}
               </span>
 
-              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.50)' }}>{player.tournaments}</span>
+              <span className="col-start-2 text-xs xl:col-auto" style={{ color: 'rgba(255,255,255,0.50)' }}><span className="xl:hidden">Tournaments: </span>{player.tournaments}</span>
 
-              <span className="text-xs" style={{ color: 'rgba(255,255,255,0.50)' }}>{player.winRate}</span>
+              <span className="col-start-2 text-xs xl:col-auto" style={{ color: 'rgba(255,255,255,0.50)' }}><span className="xl:hidden">Win rate: </span>{player.winRate}</span>
 
               <span
-                className="text-[10px] font-medium px-2 py-1 rounded-md inline-block"
+                className="col-start-2 justify-self-start text-[10px] font-medium px-2 py-1 rounded-md inline-block xl:col-auto xl:justify-self-stretch"
                 style={{
                   background: tierColors[player.tier].bg,
                   color:      tierColors[player.tier].text,
@@ -291,7 +291,7 @@ export default function LeaderboardsClient() {
 
       {/* Sticky CTA */}
       <div
-        className="sticky bottom-0 -mx-6 -mb-6 px-6 py-4 flex items-center justify-between"
+        className="-mx-4 -mb-4 px-4 py-4 flex min-w-0 flex-col items-stretch gap-4 sm:-mx-6 sm:-mb-6 sm:px-6 lg:sticky lg:bottom-0 xl:flex-row xl:items-center xl:justify-between"
         style={{ background: '#08080D', borderTop: '1px solid rgba(255,255,255,0.07)' }}
       >
         <div>
@@ -300,7 +300,7 @@ export default function LeaderboardsClient() {
         </div>
         <button
           onClick={() => openModal('register')}
-          className="text-[#08080D] text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
+          className="min-h-11 lg:min-h-0 shrink-0 text-[#08080D] text-sm font-medium px-6 py-2.5 rounded-lg transition-colors"
           style={{ background: '#F0B429' }}
           onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.background = '#D4A017')}
           onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = '#F0B429')}

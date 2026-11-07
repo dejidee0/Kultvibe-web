@@ -22,7 +22,7 @@ export default function CommunityClient() {
   const [activeRoom, setActiveRoom]         = useState('gaming-general')
   const [inputValue, setInputValue]         = useState('')
   const [displayedMessages, setDisplayedMessages] = useState<CommunityMessage[]>([])
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesRef = useRef<HTMLDivElement>(null)
 
   const currentVertical = communityData.find(v => v.id === activeVertical)!
   const currentRoom     = currentVertical.rooms.find(r => r.id === activeRoom)!
@@ -49,15 +49,16 @@ export default function CommunityClient() {
       }
     })
     return members.slice(0, currentRoom.online)
-  }, [activeRoom])
+  }, [currentRoom])
 
   useEffect(() => {
     setDisplayedMessages(currentRoom.messages)
     setInputValue('')
-  }, [activeRoom])
+  }, [currentRoom])
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const messages = messagesRef.current
+    messages?.scrollTo({ top: messages.scrollHeight, behavior: 'smooth' })
   }, [displayedMessages])
 
   useEffect(() => {
@@ -92,11 +93,37 @@ export default function CommunityClient() {
   const bgWhite3 = { background: 'rgba(255,255,255,0.03)' }
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-full min-h-0 min-w-0 flex-col overflow-hidden lg:flex-row">
+      <div className="shrink-0 border-b border-white/[0.07] bg-kv-surface p-3 lg:hidden">
+        <div className="grid grid-cols-2 gap-2">
+          <label className="min-w-0 text-[10px] uppercase tracking-wider text-white/40">
+            Vertical
+            <select aria-label="Community vertical" value={activeVertical} onChange={event => {
+              const vertical = communityData.find(item => item.id === event.target.value)!
+              setActiveVertical(vertical.id)
+              setActiveRoom(vertical.rooms[0].id)
+            }} className="mt-1 min-h-11 w-full min-w-0 rounded-lg border border-white/10 bg-kv-base px-2 text-white">
+              {communityData.map(vertical => <option key={vertical.id} value={vertical.id}>{vertical.label}</option>)}
+            </select>
+          </label>
+          <label className="min-w-0 text-[10px] uppercase tracking-wider text-white/40">
+            Room
+            <select aria-label="Community room" value={activeRoom} onChange={event => setActiveRoom(event.target.value)} className="mt-1 min-h-11 w-full min-w-0 rounded-lg border border-white/10 bg-kv-base px-2 text-white">
+              {currentVertical.rooms.map(room => <option key={room.id} value={room.id}>{room.name}</option>)}
+            </select>
+          </label>
+        </div>
+        <details className="mt-1 text-xs text-white/60">
+          <summary className="min-h-11 cursor-pointer py-3">Online members ({currentRoom.online})</summary>
+          <div className="flex max-h-[25dvh] flex-wrap gap-2 overflow-y-auto pb-2">
+            {onlineMembers.map(member => <span key={member.seed} className="rounded-md bg-white/5 px-2 py-2">{member.name}</span>)}
+          </div>
+        </details>
+      </div>
 
       {/* Rooms sidebar */}
       <div
-        className="w-[220px] flex-shrink-0 flex flex-col bg-kv-surface"
+        className="hidden w-[220px] flex-shrink-0 flex-col bg-kv-surface lg:flex"
         style={{ borderRight: '1px solid rgba(255,255,255,0.07)' }}
       >
         {/* Vertical tabs */}
@@ -184,21 +211,21 @@ export default function CommunityClient() {
       </div>
 
       {/* Main chat */}
-      <div className="flex-1 flex flex-col min-w-0 h-full">
+      <div className="flex-1 flex flex-col min-h-0 min-w-0 lg:h-full">
 
         {/* Room header */}
         <div
-          className="px-5 py-3 flex items-center justify-between flex-shrink-0"
+          className="px-4 lg:px-5 py-3 flex flex-col gap-2 items-start justify-between flex-shrink-0 xl:flex-row xl:items-center"
           style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <HugeiconsIcon icon={currentRoom.icon} size={18} color="rgba(255,255,255,0.60)" strokeWidth={1.5} />
             <div>
               <p className="text-sm font-medium text-white">{currentRoom.name}</p>
               <p className="text-[10px] text-white/35">{currentRoom.description}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 text-xs text-white/35">
+          <div className="flex flex-wrap items-center gap-3 text-xs text-white/35">
             <span className="flex items-center gap-1">
               <HugeiconsIcon icon={UserGroupIcon} size={12} color="currentColor" strokeWidth={1.5} />
               {currentRoom.members.toLocaleString()} members
@@ -211,7 +238,7 @@ export default function CommunityClient() {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
+        <div ref={messagesRef} className="flex-1 min-h-0 overflow-y-auto p-4 lg:p-5 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.07)' }} />
             <span className="text-[10px] text-white/25">Today</span>
@@ -229,7 +256,7 @@ export default function CommunityClient() {
                 style={msg.isSystem ? { border: '1px solid rgba(240,180,41,0.30)' } : {}}
               />
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
                   <span
                     className="text-xs font-medium"
                     style={{ color: msg.isSystem ? '#F0B429' : '#fff' }}
@@ -246,17 +273,16 @@ export default function CommunityClient() {
                   )}
                   <span className="text-[10px] text-white/25">{msg.timestamp}</span>
                 </div>
-                <p className="text-sm text-white/70 leading-relaxed">{msg.text}</p>
+                <p className="text-sm text-white/70 leading-relaxed break-words">{msg.text}</p>
               </div>
             </div>
           ))}
-          <div ref={messagesEndRef} />
         </div>
 
         {/* Input / read-only */}
         {currentRoom.readOnly ? (
           <div
-            className="px-5 py-4 flex items-center gap-2"
+            className="shrink-0 px-3 lg:px-5 py-3 lg:py-4 flex items-center gap-2"
             style={{ borderTop: '1px solid rgba(255,255,255,0.07)', ...bgWhite3 }}
           >
             <HugeiconsIcon icon={EyeIcon} size={14} color="rgba(255,255,255,0.25)" strokeWidth={1.5} />
@@ -264,7 +290,7 @@ export default function CommunityClient() {
           </div>
         ) : (
           <div
-            className="px-5 py-4 flex items-center gap-2"
+            className="shrink-0 px-3 lg:px-5 py-3 lg:py-4 flex items-center gap-2"
             style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
           >
             <img
@@ -274,14 +300,14 @@ export default function CommunityClient() {
               className="rounded-full flex-shrink-0"
               alt="You"
             />
-            <div className="flex-1 relative">
+            <div className="min-w-0 flex-1 relative">
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                placeholder={`Message ${currentRoom.name}...`}
-                className="w-full rounded-lg px-4 py-2.5 text-sm text-white outline-none transition-colors pr-10"
+                aria-label={`Message ${currentRoom.name}`} placeholder={`Message ${currentRoom.name}...`}
+                className="min-h-11 lg:min-h-0 min-w-0 w-full rounded-lg px-3 py-2.5 text-sm text-white outline-none transition-colors pr-10"
                 style={{
                   ...bgWhite6,
                   border: '1px solid rgba(255,255,255,0.10)',
@@ -293,7 +319,7 @@ export default function CommunityClient() {
               />
               <button
                 onClick={handleSend}
-                className="absolute right-3 top-1/2 -translate-y-1/2 transition-colors"
+                aria-label="Send message" className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center transition-colors"
                 style={{ color: 'rgba(255,255,255,0.30)' }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.70)' }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.30)' }}
@@ -307,7 +333,7 @@ export default function CommunityClient() {
 
       {/* Members panel */}
       <div
-        className="w-[200px] flex-shrink-0 flex flex-col bg-kv-surface h-full overflow-hidden"
+        className="hidden w-[200px] flex-shrink-0 flex-col bg-kv-surface h-full overflow-hidden lg:flex"
         style={{ borderLeft: '1px solid rgba(255,255,255,0.07)' }}
       >
         <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.07)' }}>

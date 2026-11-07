@@ -96,7 +96,7 @@ function FeaturedCreatorCard({ creator }: { creator: CreatorData }) {
           </div>
 
           <button
-            className="w-full text-xs py-1.5 rounded-md transition-colors"
+            className="min-h-11 w-full text-xs py-1.5 rounded-md transition-colors lg:min-h-0"
             style={{ border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.50)' }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(240,180,41,0.40)'
@@ -212,10 +212,10 @@ export default function CreatorsClient() {
   }, [isLoadingMore, hasMore])
 
   return (
-    <div className="p-6 flex flex-col gap-8">
+    <div className="p-4 sm:p-6 min-w-0 flex flex-col gap-8">
 
       {/* Filters */}
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex min-w-0 flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex items-center gap-2 flex-wrap">
           {['All', 'Gaming', 'Music', 'Tech & Dev', 'Lifestyle', 'Streaming', 'Creator Economy'].map(v => {
             const isActive = activeVertical === v
@@ -223,7 +223,7 @@ export default function CreatorsClient() {
               <button
                 key={v}
                 onClick={() => setActiveVertical(v)}
-                className="px-4 py-2 rounded-full text-xs font-medium transition-all"
+                className="min-h-11 px-4 py-2 rounded-full text-xs font-medium transition-all lg:min-h-0"
                 style={{
                   background: isActive ? 'rgba(240,180,41,0.15)' : 'transparent',
                   border:     isActive ? '1px solid rgba(240,180,41,0.40)' : '1px solid rgba(255,255,255,0.10)',
@@ -237,11 +237,11 @@ export default function CreatorsClient() {
             )
           })}
         </div>
-        <div className="flex items-center gap-2 flex-shrink-0">
+        <div className="flex w-full min-w-0 items-center gap-2 sm:w-auto xl:flex-shrink-0">
           <select
-            value={sort}
+            aria-label="Sort creators" value={sort}
             onChange={e => setSort(e.target.value)}
-            className="rounded-lg px-3 py-2 text-xs cursor-pointer"
+            className="min-h-11 min-w-0 flex-1 rounded-lg px-3 py-2 text-xs cursor-pointer sm:flex-none lg:min-h-0"
             style={SELECT_STYLE}
           >
             {['Most followers', 'Most earnings', 'Newest'].map(o => (
@@ -249,9 +249,9 @@ export default function CreatorsClient() {
             ))}
           </select>
           <select
-            value={city}
+            aria-label="Creator region" value={city}
             onChange={e => setCity(e.target.value)}
-            className="rounded-lg px-3 py-2 text-xs cursor-pointer"
+            className="min-h-11 min-w-0 flex-1 rounded-lg px-3 py-2 text-xs cursor-pointer sm:flex-none lg:min-h-0"
             style={SELECT_STYLE}
           >
             {[
@@ -273,7 +273,7 @@ export default function CreatorsClient() {
           <HugeiconsIcon icon={StarIcon} size={16} color="#F0B429" strokeWidth={1.5} />
           <span className="text-sm font-medium text-white">Featured creators</span>
         </div>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {top4.map(creator => (
             <FeaturedCreatorCard key={creator.id} creator={creator} />
           ))}
@@ -285,7 +285,7 @@ export default function CreatorsClient() {
         <div className="mb-4">
           <span className="text-sm font-medium text-white">{filteredCreators.length} creator{filteredCreators.length !== 1 ? 's' : ''}</span>
         </div>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           {visibleCreators.map(creator => (
             <CreatorCard key={creator.id} creator={creator} />
           ))}
@@ -307,7 +307,7 @@ export default function CreatorsClient() {
           style={{ background: 'linear-gradient(to right, rgba(120,80,0,0.45), rgba(120,80,0,0.15), transparent)', zIndex: 1 }}
         />
         <div
-          className="relative p-8 flex items-center justify-between rounded-xl"
+          className="relative p-5 sm:p-8 flex min-w-0 flex-col items-start gap-6 xl:flex-row xl:items-center xl:justify-between rounded-xl"
           style={{ border: '1px solid rgba(240,180,41,0.20)', zIndex: 2 }}
         >
           <div>
@@ -325,7 +325,7 @@ export default function CreatorsClient() {
             </p>
           </div>
 
-          <div className="flex flex-col items-end gap-3 flex-shrink-0 ml-8">
+          <div className="flex w-full min-w-0 flex-col items-start gap-3 xl:w-auto xl:flex-shrink-0 xl:items-end xl:ml-8">
             <div className="flex items-center gap-4 mb-2">
               <div className="text-center">
                 <p className="text-lg font-medium text-white">12K+</p>
@@ -344,7 +344,7 @@ export default function CreatorsClient() {
             </div>
             <button
               onClick={() => openModal('register')}
-              className="font-medium px-6 py-3 rounded-lg text-sm transition-colors"
+              className="min-h-11 w-full font-medium px-6 py-3 rounded-lg text-sm transition-colors sm:w-auto"
               style={{ background: '#F0B429', color: '#08080D' }}
               onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.background = '#D4A017')}
               onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.background = '#F0B429')}

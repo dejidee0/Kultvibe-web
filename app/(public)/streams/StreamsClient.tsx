@@ -70,8 +70,7 @@ function HeroStreamCard({ stream }: { stream: HeroStream }) {
 
   return (
     <div
-      className="relative flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer group"
-      style={{ width: 320, height: 180 }}
+      className="relative aspect-video w-[min(320px,calc(100vw-2rem))] flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer group"
       onMouseEnter={() => videoRef.current?.play()}
       onMouseLeave={() => {
         if (videoRef.current) {
@@ -160,12 +159,12 @@ function listThumb(stream: GridStream): string {
 function StreamListRow({ stream }: { stream: GridStream }) {
   return (
     <div
-      className="flex items-center gap-4 rounded-xl cursor-pointer transition-colors"
+      className="grid min-w-0 grid-cols-[96px_minmax(0,1fr)] items-center gap-3 rounded-xl cursor-pointer transition-colors sm:flex sm:gap-4"
       style={{ padding: '10px 12px' }}
       onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.03)')}
       onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.background = 'transparent')}
     >
-      <div className="relative rounded-xl overflow-hidden flex-shrink-0" style={{ width: 128, height: 72 }}>
+      <div className="relative row-span-2 h-[54px] w-24 flex-shrink-0 overflow-hidden rounded-xl sm:h-[72px] sm:w-32">
         <div className="absolute inset-0" style={{ background: listThumb(stream) }} />
         <span
           className="absolute bottom-1.5 left-1.5 text-white font-bold rounded"
@@ -197,7 +196,7 @@ function StreamListRow({ stream }: { stream: GridStream }) {
         </div>
       </div>
 
-      <div className="flex items-center gap-1.5 flex-shrink-0">
+      <div className="col-start-2 flex items-center gap-1.5 flex-shrink-0">
         <HugeiconsIcon icon={EyeIcon} size={12} color="rgba(255,255,255,0.28)" strokeWidth={1.5} />
         <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.38)' }}>{fmtViewers(stream.viewers)}</span>
       </div>
@@ -266,7 +265,7 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
   const hasMore = visibleCount < filtered.length;
 
   return (
-    <div className="flex flex-col gap-6 p-6" style={{ background: '#08080D', minHeight: '100%' }}>
+    <div className="flex min-w-0 flex-col gap-6 p-4 sm:p-6" style={{ background: '#08080D', minHeight: '100%' }}>
 
       {/* ---- Section 1: Trending hero strip with right-edge fade ---- */}
       <div>
@@ -298,7 +297,7 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
             <button
               key={cat.label}
               onClick={() => setActiveCategory(cat.label)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap transition-all duration-200"
+              className="flex min-h-11 shrink-0 items-center gap-2 px-4 py-2 rounded-full text-sm whitespace-nowrap lg:min-h-0 transition-all duration-200"
               style={{
                 color: isActive ? '#F0B429' : 'rgba(255,255,255,0.48)',
                 background: isActive ? 'rgba(240,180,41,0.10)' : 'transparent',
@@ -332,26 +331,26 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
       </div>
 
       {/* ---- Section 3: Controls row - 3 equal columns so search is truly centred ---- */}
-      <div className="flex items-center">
+      <div className="flex min-w-0 flex-wrap items-center gap-3 xl:gap-0">
         {/* Left: stream count */}
-        <div className="flex-1">
+        <div className="min-w-0 flex-1">
           <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.38)' }}>
             {filtered.length} stream{filtered.length !== 1 ? 's' : ''} live
           </span>
         </div>
 
         {/* Centre: tag search */}
-        <div className="flex justify-center flex-1">
-          <div className="relative w-96">
+        <div className="order-3 flex w-full min-w-0 justify-center xl:order-none xl:w-auto xl:flex-1 xl:min-w-[384px]">
+          <div className="relative w-full min-w-0 xl:max-w-96">
             <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
               <HugeiconsIcon icon={Search01Icon} size={13} color="rgba(255,255,255,0.28)" strokeWidth={1.5} />
             </div>
             <input
               type="text"
-              placeholder="Filter by tag: RANKED, SQUADS..."
+              aria-label="Filter streams by tag" placeholder="Filter by tag: RANKED, SQUADS..."
               value={tagSearch}
               onChange={e => setTagSearch(e.target.value.toUpperCase())}
-              className="w-full rounded-lg pl-9 py-2 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
+              className="min-h-11 lg:min-h-0 w-full min-w-0 rounded-lg pl-9 py-2 text-xs text-white placeholder:text-white/30 outline-none transition-colors"
               style={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.09)',
@@ -372,12 +371,12 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
         </div>
 
         {/* Right: sort + view toggle */}
-        <div className="flex-1 flex items-center justify-end gap-3">
+        <div className="flex min-w-0 flex-wrap items-center justify-end gap-2 xl:flex-1 xl:gap-3">
           <div className="relative flex items-center">
             <select
               value={sort}
               onChange={e => setSort(e.target.value as SortKey)}
-              className="rounded-lg text-xs outline-none cursor-pointer appearance-none"
+              aria-label="Sort streams" className="min-h-11 max-w-full rounded-lg text-xs outline-none cursor-pointer appearance-none lg:min-h-0"
               style={{
                 background: 'rgba(255,255,255,0.05)',
                 border: '1px solid rgba(255,255,255,0.09)',
@@ -405,12 +404,12 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
           >
             <button
               onClick={() => setView('grid')}
-              className="p-1.5 rounded-md transition-all duration-150"
+              className="flex h-11 w-11 items-center justify-center rounded-md transition-all duration-150 lg:h-auto lg:w-auto lg:p-1.5"
               style={{
                 color: view === 'grid' ? '#F0B429' : 'rgba(255,255,255,0.28)',
                 background: view === 'grid' ? 'rgba(240,180,41,0.14)' : 'transparent',
               }}
-              title="Grid view"
+              aria-pressed={view === 'grid'} title="Grid view"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                 <rect x="0" y="0" width="5.5" height="5.5" rx="1.2" />
@@ -421,12 +420,12 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
             </button>
             <button
               onClick={() => setView('list')}
-              className="p-1.5 rounded-md transition-all duration-150"
+              className="flex h-11 w-11 items-center justify-center rounded-md transition-all duration-150 lg:h-auto lg:w-auto lg:p-1.5"
               style={{
                 color: view === 'list' ? '#F0B429' : 'rgba(255,255,255,0.28)',
                 background: view === 'list' ? 'rgba(240,180,41,0.14)' : 'transparent',
               }}
-              title="List view"
+              aria-pressed={view === 'list'} title="List view"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
                 <rect x="0" y="0.5" width="14" height="2.5" rx="1.25" />
@@ -469,7 +468,7 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
         <>
           <div
             key={`${activeCategory}-${sort}-${tagSearch}-grid`}
-            className="grid grid-cols-4 gap-3"
+            className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4"
             style={{ animation: 'kv-fade-up 0.22s ease both' }}
           >
             {visibleStreams.map(s => <StreamCard key={s.title} {...s} />)}
