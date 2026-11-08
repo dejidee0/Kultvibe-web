@@ -1,6 +1,6 @@
 # Product and media refresh verification
 
-Updated: 2026-11-07.
+Updated: 2026-11-09.
 
 ## B0: media inventory and production baseline
 
@@ -48,6 +48,14 @@ The register modal starts with accessible native radio options for Gamer, Creato
 The modal uses 16px inputs, 44px targets, inner scrolling, focus containment/restoration and Escape dismissal. It shows API field errors, duplicate/rate/network messages, and the API success message. Existing account actions explicitly explain that accounts open at launch and do not make authentication requests. Removed the obsolete frontend vertical-selector exports; the generated legacy API field remains for compatibility.
 
 TypeScript and lint pass with zero errors and 32 existing image warnings. The full mocked form/error/viewport matrix is still required by B7 before any frontend production merge.
+
+## B4: real waitlist count
+
+Replaced the four invented counters with a server-rendered waitlist message. lib/waitlistStats.ts uses the existing NEXT_PUBLIC_API_BASE_URL, the generated count response type, a 60-second data-cache revalidation and a 3.5-second timeout. Only successful non-negative safe-integer counts are displayed.
+
+Below 25: Be one of the first on KultVibe. At 25 and above: floor to the nearest five, format with English thousands separators, and show the required waitlist message. Errors and malformed responses show Join the KultVibe waitlist. with no number. The section and copy reserve enough vertical space for wrapped text, with no counter animation.
+
+TypeScript and lint pass with zero errors and the same 32 image warnings. No API request was made by these static checks. The server-rendered mocked cases 0, 12, 30, 1250 and error remain required in B7.
 
 ## Remaining steps
 
