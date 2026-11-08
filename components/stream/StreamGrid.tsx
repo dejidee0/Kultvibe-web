@@ -1,8 +1,7 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
-import StreamCard from '@/components/ui/StreamCard';
-import { getShuffledVideos } from '@/lib/videoPool';
+import StreamCard from '@/components/ui/StreamCard'
+import { streamsData } from '@/lib/streamsData'
 
 const STREAM_META = [
   { id: 'zulusquad', title: 'PUBG Naija Royale',   streamer: '@ZuluSquad', city: 'Abuja',         viewers: 940, game: 'PUBG Mobile',      tags: ['SQUADS', 'AFRICA'],   gradientFrom: '#1e3a5f', gradientTo: '#0c1a2e' },
@@ -11,21 +10,10 @@ const STREAM_META = [
 ];
 
 export default function StreamGrid() {
-  const [videoSrcs, setVideoSrcs] = useState([
-    '/videos/stream-pubg.mp4',
-    '/videos/stream-beatbattle.mp4',
-    '/videos/stream-eafc.mp4',
-  ]);
-
-  useEffect(() => {
-    setVideoSrcs(getShuffledVideos().slice(1));
-  }, []);
-
-  return (
-    <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      {STREAM_META.map((s, i) => (
-        <StreamCard key={s.title} {...s} videoSrc={videoSrcs[i]} />
-      ))}
-    </div>
-  );
+  return <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {STREAM_META.map(stream => {
+      const media = streamsData.find(entry => entry.id === stream.id)
+      return <StreamCard key={stream.id} {...stream} videoSrc={media?.videoSrc} mobileSrc={media?.mobileSrc} posterSrc={media?.posterSrc} />
+    })}
+  </div>
 }

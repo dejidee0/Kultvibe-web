@@ -1,5 +1,11 @@
 'use client';
 
+import Image from 'next/image'
+
+import { mediaForVideo } from '@/lib/streamMedia'
+
+import PreviewVideo from '@/components/stream/PreviewVideo'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import React, { useState, useRef, useMemo, useEffect } from 'react';
@@ -66,27 +72,16 @@ const ALL_STREAMS: GridStream[] = [
 ];
 
 function HeroStreamCard({ stream }: { stream: HeroStream }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hovered, setHovered] = useState(false);
+  const media = mediaForVideo(stream.videoSrc);
 
   return (
     <div
       className="relative aspect-video w-[min(320px,calc(100vw-2rem))] flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer group"
-      onMouseEnter={() => videoRef.current?.play()}
-      onMouseLeave={() => {
-        if (videoRef.current) {
-          videoRef.current.pause();
-          videoRef.current.currentTime = 0;
-        }
-      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <video
-        ref={videoRef}
-        src={stream.videoSrc}
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-      />
+      {media && <PreviewVideo videoSrc={stream.videoSrc} {...media} title={stream.title} mode="card" hovered={hovered} sizes="320px" />}
       <div
         className="absolute inset-0"
         style={{
@@ -113,13 +108,12 @@ function HeroStreamCard({ stream }: { stream: HeroStream }) {
           {stream.title}
         </p>
         <div className="flex items-center gap-2">
-          <img
+          <Image
             src={`https://api.dicebear.com/7.x/bottts/svg?seed=${stream.streamer}&backgroundColor=0D0D14`}
             loading="lazy"
             alt={stream.streamer}
             className="rounded-full flex-shrink-0"
-            style={{ width: 20, height: 20 }}
-          />
+            style={{ width: 20, height: 20 }} unoptimized width={20} height={20} sizes="20px" />
           <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.58)' }}>{stream.streamer}</span>
         </div>
       </div>
@@ -145,6 +139,7 @@ function listThumb(stream: GridStream): string {
 }
 
 function StreamListRow({ stream }: { stream: GridStream }) {
+  const media = mediaForVideo(stream.videoSrc);
   return (
     <div
       className="grid min-w-0 grid-cols-[96px_minmax(0,1fr)] items-center gap-3 rounded-xl cursor-pointer transition-colors sm:flex sm:gap-4"
@@ -153,7 +148,7 @@ function StreamListRow({ stream }: { stream: GridStream }) {
       onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.background = 'transparent')}
     >
       <div className="relative row-span-2 h-[54px] w-24 flex-shrink-0 overflow-hidden rounded-xl sm:h-[72px] sm:w-32">
-        <div className="absolute inset-0" style={{ background: listThumb(stream) }} />
+        {media ? <Image src={media.posterSrc} alt={`Preview frame from ${stream.title}`} fill sizes="(min-width: 640px) 128px, 96px" unoptimized className="object-contain" /> : <div className="absolute inset-0" style={{ background: listThumb(stream) }} />}
         <PreviewBadge uppercase />
       </div>
 

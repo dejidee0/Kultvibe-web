@@ -1,31 +1,33 @@
 'use client';
 
+import Image from 'next/image'
+
 import { useState } from 'react';
 import Lottie from 'lottie-react';
 import sparkleAnimation from '@/lib/lottie/sparkle.json';
 
 type Props = {
   twemojiHex?: string;
+  label?: string;
   emoji: string;
   size?: number;
   showSparkle?: boolean;
 };
 
-export default function GiftVisual({ twemojiHex, emoji, size = 32, showSparkle = false }: Props) {
+export default function GiftVisual({ twemojiHex, label, emoji, size = 32, showSparkle = false }: Props) {
   const [imgFailed, setImgFailed] = useState(false);
 
   const useImage = !!twemojiHex && !imgFailed;
 
   const icon = useImage ? (
-    <img
+    <Image
       src={`https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/${twemojiHex}.svg`}
-      alt={emoji}
+      alt={label ? `${label} preview gift` : 'Preview gift icon'}
       width={size}
       height={size}
       onError={() => setImgFailed(true)}
       style={{ display: 'block' }}
-      draggable={false}
-    />
+      draggable={false} unoptimized sizes={`${size}px`} loading="lazy" />
   ) : (
     <span style={{ fontSize: size, lineHeight: 1 }}>{emoji}</span>
   );
@@ -39,6 +41,7 @@ export default function GiftVisual({ twemojiHex, emoji, size = 32, showSparkle =
     <div className="relative" style={{ width: size, height: size }}>
       {/* Lottie bursts outward - extends beyond the icon box */}
       <Lottie
+        aria-hidden="true"
         animationData={sparkleAnimation}
         loop={false}
         style={{

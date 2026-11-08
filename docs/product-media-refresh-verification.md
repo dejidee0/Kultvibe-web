@@ -65,6 +65,18 @@ Gift UI explains that it is a sample and no money is charged. Wallet and other d
 
 TypeScript and lint pass: zero errors and the same 32 existing image warnings. Removed a duplicate use-client directive exposed by the new import, eliminating the temporary extra warning. Verified 13 protected navigation/category checks against original main: unchanged sidebar/navigation data, mobile/dashboard navigation, category data, creator/discover fixtures, and the inline stream/tournament/leaderboard/discover lists. Full rendered regression remains gated on B7.
 
+## B6: poster-first responsive media
+
+Extended the four video entries with mobileSrc and posterSrc and verified the rest of the stream source is unchanged. Added a shared player and page-wide two-video coordinator, wired through StreamCard, StreamsClient, FeaturedStream and StreamWatchClient. JavaScript selects the 480 variant for narrow/slow connections and Save-Data. Posters render before playback; off-screen cards do not mount a video or attach its source until visible. Players pause off screen and in hidden tabs, and reduced-motion/Save-Data disable autoplay. Featured/watch players expose manual play, and desktop cards use hover while coarse-pointer cards can play in view.
+
+Removed random title-to-clip mismatches. Whole-frame contain fitting preserves provider marks. The featured profile bar sits below the video rather than covering its lower edge, and watch controls sit above the frame's lower-right corner. Added accessible video and icon-control labels.
+
+Converted all **32** raw image usages (the prompt estimated 18) to next/image, with sizes and reserved dimensions/fill, lazy loading and alt text. Existing SVG/external references and already-optimized posters avoid a second encode/proxy fetch. No new image host was introduced; the existing Dicebear remotePattern remains. Only the homepage featured poster has priority.
+
+MEDIA.md inventories 20 local assets with dimensions and byte sizes and 56 existing artwork references, preserves the exact stream-pack rights notice, and explicitly identifies unverified external rights and OG embedded tagline. CONTENT_AND_MEDIA_STANDARDS.md records approved vocabulary, accessibility, preview and media rules.
+
+TypeScript and lint pass: **0 errors, 0 warnings**. Verified original asset files are unchanged. Corrected two verification/edit-script assumptions: self-closing video tags, and AST printer formatting in an unchanged-data comparison. The final comparison strips only the ten allowed new media-field lines and otherwise matches the original source. The full production-build playback, count/form, weight and layout checks remain mandatory in B7.
+
 ## Remaining steps
 
 B1 through B8 remain pending. Part C remains gated on Part B.

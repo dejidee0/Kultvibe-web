@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import { useEffect } from 'react'
@@ -134,7 +136,7 @@ function GiftFloat({
             emoji={activeGift.gift.emoji}
             size={config.size}
             showSparkle
-          />
+           label={activeGift.gift.name} />
         </div>
 
         {/* Sender pill */}
@@ -156,12 +158,11 @@ function GiftFloat({
             whiteSpace: 'nowrap',
           }}
         >
-          <img
+          <Image
             src={`https://api.dicebear.com/7.x/bottts/svg?seed=${activeGift.sender}&backgroundColor=0D0D14`}
             loading="lazy"
             alt={activeGift.sender}
-            style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0 }}
-          />
+            style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0 }} unoptimized width={18} height={18} sizes="18px" />
           <span style={{ fontSize: '11px', fontWeight: 700, color: config.color }}>
             {activeGift.sender}
           </span>
@@ -244,18 +245,17 @@ function BigGiftBanner({
           emoji={activeGift.gift.emoji}
           size={52}
           showSparkle
-        />
+         label={activeGift.gift.name} />
       </div>
 
       {/* Text info */}
       <div className="flex flex-col flex-1 min-w-0 relative">
         <div className="flex items-center gap-1.5 mb-0.5">
-          <img
+          <Image
             src={`https://api.dicebear.com/7.x/bottts/svg?seed=${activeGift.sender}&backgroundColor=0D0D14`}
             loading="lazy"
             alt={activeGift.sender}
-            style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0 }}
-          />
+            style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0 }} unoptimized width={18} height={18} sizes="18px" />
           <span style={{ fontSize: '12px', fontWeight: 700, color: config.color }}>
             {activeGift.sender}
           </span>

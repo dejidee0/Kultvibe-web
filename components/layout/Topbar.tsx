@@ -22,7 +22,7 @@ export default function Topbar() {
       {/* Search */}
       <div className="flex-1 max-w-xs mr-4">
         <input
-          type="text"
+          type="text" aria-label="Search streams, tournaments, creators"
           placeholder="Search streams, tournaments, creators..."
           className="w-full text-sm rounded-md focus:outline-none focus:ring-1 focus:ring-yellow-500 text-white placeholder:text-[rgba(255,255,255,0.3)]"
           style={{
@@ -37,7 +37,7 @@ export default function Topbar() {
       <div className="flex-1" />
 
       {/* Notification bell */}
-      <button
+      <button aria-label="Notifications"
         className="flex items-center justify-center rounded-lg mr-2 transition-colors"
         style={{
           width: 36,

@@ -9,6 +9,8 @@ export interface StreamData {
   tags: string[]
   isLive: boolean
   videoSrc?: string
+  mobileSrc?: string
+  posterSrc?: string
   gradientFrom?: string
   gradientTo?: string
   followers: string
@@ -30,6 +32,8 @@ export const streamsData: StreamData[] = [
     tags: ['RANKED', 'NIGERIA'],
     isLive: true,
     videoSrc: '/videos/featured-stream.mp4',
+    mobileSrc: '/videos/featured-stream-480.mp4',
+    posterSrc: '/posters/featured-stream.webp',
     followers: '24.5K',
     bio: 'Pro COD Mobile player 🎮 | Top 50 Africa | Content creator & grinder. Streaming daily from Lagos.',
     socials: [
@@ -52,6 +56,8 @@ export const streamsData: StreamData[] = [
     tags: ['SQUADS', 'AFRICA'],
     isLive: true,
     videoSrc: '/videos/stream-pubg.mp4',
+    mobileSrc: '/videos/stream-pubg-480.mp4',
+    posterSrc: '/posters/stream-pubg.webp',
     followers: '18.2K',
     bio: 'PUBG Mobile squad leader. Abuja based. Daily squad push streams, road to top 10 Africa.',
     socials: [
@@ -72,6 +78,8 @@ export const streamsData: StreamData[] = [
     tags: ['MUSIC', 'AFROBEATS'],
     isLive: true,
     videoSrc: '/videos/stream-beatbattle.mp4',
+    mobileSrc: '/videos/stream-beatbattle-480.mp4',
+    posterSrc: '/posters/stream-beatbattle.webp',
     followers: '18.2K',
     bio: 'Afrobeats producer 🎵 | Beat battles every week | Lagos studio sessions live on KultVibe.',
     socials: [
@@ -93,6 +101,8 @@ export const streamsData: StreamData[] = [
     tags: ['FIFA', '1V1'],
     isLive: true,
     videoSrc: '/videos/stream-eafc.mp4',
+    mobileSrc: '/videos/stream-eafc-480.mp4',
+    posterSrc: '/posters/stream-eafc.webp',
     followers: '9.4K',
     bio: 'EA FC 1v1 ranked grinder. Port Harcourt. Climbing to Elite division on stream.',
     socials: [

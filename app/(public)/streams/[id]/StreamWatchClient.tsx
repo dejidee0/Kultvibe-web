@@ -1,5 +1,9 @@
 'use client'
 
+import Image from 'next/image'
+
+import PreviewVideo from '@/components/stream/PreviewVideo'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import React, { useState, useRef, useCallback } from 'react'
@@ -39,7 +43,6 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
   const [isMuted, setIsMuted] = useState(true)
   const [theatreMode, setTheatreMode] = useState(false)
   const [mobilePanel, setMobilePanel] = useState<'about' | 'chat'>('chat')
-  const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { openPicker } = useGiftStore()
   const { openModal } = useAuthStore()
@@ -71,16 +74,8 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
             ref={containerRef}
             className={`relative aspect-video w-full flex-shrink-0 group bg-black lg:aspect-auto ${theatreMode ? 'lg:flex-1' : 'lg:h-[480px]'}`}
           >
-            {stream.videoSrc ? (
-              <video
-                ref={videoRef}
-                src={stream.videoSrc}
-                autoPlay
-                loop
-                muted={isMuted}
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+            {stream.videoSrc && stream.posterSrc ? (
+              <PreviewVideo videoSrc={stream.videoSrc} mobileSrc={stream.mobileSrc} posterSrc={stream.posterSrc} title={stream.title} mode="featured" muted={isMuted} sizes="(min-width: 1024px) 75vw, 100vw" />
             ) : (
               <div
                 className="absolute inset-0"
@@ -104,7 +99,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
 
 
             {/* Bottom-right controls */}
-            <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1">
+            <div className="absolute top-3 right-3 z-20 flex items-center gap-1">
               <button
                 aria-label={isMuted ? 'Unmute stream' : 'Mute stream'} onClick={() => setIsMuted(m => !m)}
                 className="flex h-11 w-11 items-center justify-center rounded-lg transition-colors text-white/60 lg:h-auto lg:w-auto lg:p-2 hover:text-white hover:bg-white/10"
@@ -151,15 +146,14 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
             className="relative min-h-[280px] px-4 py-6 lg:h-[480px] flex flex-shrink-0 flex-col items-center justify-center gap-4"
             style={{ background: 'linear-gradient(135deg, #0D0D14, #111118)' }}
           >
-            <img
+            <Image
               src={`https://api.dicebear.com/7.x/bottts/svg?seed=${stream.streamer}&backgroundColor=0D0D14`}
               loading="lazy"
               width={80}
               height={80}
               className="rounded-full"
               style={{ border: '2px solid rgba(255,255,255,0.10)' }}
-              alt={stream.streamer}
-            />
+              alt={stream.streamer} unoptimized sizes="80px" />
             <div className="text-center">
               <p className="text-base font-medium text-white mb-1">{stream.streamer} is offline</p>
               <p className="text-sm text-white/40">Last seen streaming {stream.game}</p>
@@ -196,14 +190,13 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
               }}
             >
               <div className="flex min-w-0 flex-wrap items-center gap-3">
-                <img
+                <Image
                   src={`https://api.dicebear.com/7.x/bottts/svg?seed=${stream.streamer}&backgroundColor=0D0D14`}
                   loading="lazy"
                   width={40}
                   height={40}
                   className="rounded-full flex-shrink-0"
-                  alt={stream.streamer}
-                />
+                  alt={stream.streamer} unoptimized sizes="40px" />
                 <div>
                   <div className="flex min-w-0 flex-wrap items-center gap-1.5">
                     <Link href={`/players/${stream.id}`} className="text-base font-semibold text-white hover:text-[#F0B429] transition-colors">{stream.streamer}</Link>
@@ -318,6 +311,8 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
                     game={s.game}
                     tags={s.tags}
                     videoSrc={s.videoSrc}
+                    mobileSrc={s.mobileSrc}
+                    posterSrc={s.posterSrc}
                     gradientFrom={s.gradientFrom}
                     gradientTo={s.gradientTo}
                   />

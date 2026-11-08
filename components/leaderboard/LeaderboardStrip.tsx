@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image'
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Money01Icon } from '@hugeicons/core-free-icons';
@@ -32,14 +34,13 @@ function PlayerCard({ rank, name, city, game, earnings }: typeof PLAYERS[0]) {
         >
           {rank}
         </div>
-        <img
+        <Image
           src={`https://api.dicebear.com/7.x/bottts/svg?seed=${name}&backgroundColor=0D0D14`}
           loading="lazy"
           width={32}
           height={32}
           className="rounded-full flex-shrink-0"
-          alt={name}
-        />
+          alt={name} unoptimized sizes="32px" />
         <div className="min-w-0">
           <p className="text-xs font-medium text-white truncate">{name}</p>
           <p className="text-[10px] text-white/40">{city}</p>

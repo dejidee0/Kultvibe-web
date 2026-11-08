@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -123,15 +125,14 @@ export default function LeaderboardsClient() {
                 style={{ order: isFirst ? 2 : index === 1 ? 1 : 3 }}
               >
                 <div className={`relative mb-3 ${isFirst ? 'mt-0' : 'mt-8'}`}>
-                  <img
+                  <Image
                     src={`https://api.dicebear.com/7.x/bottts/svg?seed=${player.name}&backgroundColor=0D0D14`}
                     loading="lazy"
                     width={isFirst ? 72 : 56}
                     height={isFirst ? 72 : 56}
                     className="rounded-full"
                     style={{ border: `2px solid ${color}` }}
-                    alt={player.name}
-                  />
+                    alt={player.name} unoptimized sizes="72px" />
                   <div
                     className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium"
                     style={{ background: color, color: '#08080D' }}
@@ -204,14 +205,13 @@ export default function LeaderboardsClient() {
               </div>
 
               <Link href={`/players/${player.name.replace('@', '')}`} className="flex items-center gap-2 min-w-0 group">
-                <img
+                <Image
                   src={`https://api.dicebear.com/7.x/bottts/svg?seed=${player.name}&backgroundColor=0D0D14`}
                   loading="lazy"
                   width={28}
                   height={28}
                   className="rounded-full flex-shrink-0"
-                  alt={player.name}
-                />
+                  alt={player.name} unoptimized sizes="28px" />
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-white truncate group-hover:text-[#F0B429] transition-colors">{player.name}</p>
                   <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.40)' }}>{player.city}</p>
@@ -271,14 +271,13 @@ export default function LeaderboardsClient() {
               onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(240,180,41,0.30)')}
               onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)')}
             >
-              <img
+              <Image
                 src={`https://api.dicebear.com/7.x/bottts/svg?seed=${player.name}&backgroundColor=0D0D14`}
                 loading="lazy"
                 width={36}
                 height={36}
                 className="rounded-full flex-shrink-0"
-                alt={player.name}
-              />
+                alt={player.name} unoptimized sizes="36px" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-white truncate">{player.name}</p>
                 <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.40)' }}>{player.city}</p>

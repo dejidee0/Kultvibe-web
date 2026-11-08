@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import { brand } from '@/lib/brand'
@@ -105,14 +107,13 @@ export default function DiscoverClient() {
           >
             {/* Avatar + type badge */}
             <div className="flex-shrink-0 relative self-start mt-0.5">
-              <img
+              <Image
                 src={`https://api.dicebear.com/7.x/bottts/svg?seed=${item.actorSeed}&backgroundColor=0D0D14`}
                 loading="lazy"
                 width={40}
                 height={40}
                 className="rounded-full"
-                alt={item.actor}
-              />
+                alt={item.actor} unoptimized sizes="40px" />
               <div
                 className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center"
                 style={{ background: TYPE_BG[item.type], border: '2px solid #111118' }}
@@ -245,14 +246,13 @@ export default function DiscoverClient() {
             {trendingCreators.map(c => (
               <Link href={c.href} key={c.name}>
                 <div className="flex items-center gap-2.5 hover:opacity-80 transition-opacity cursor-pointer">
-                  <img
+                  <Image
                     src={`https://api.dicebear.com/7.x/bottts/svg?seed=${c.seed}&backgroundColor=0D0D14`}
                     loading="lazy"
                     width={32}
                     height={32}
                     className="rounded-full flex-shrink-0"
-                    alt={c.name}
-                  />
+                    alt={c.name} unoptimized sizes="32px" />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-white truncate">{c.name}</p>
                     <p className="text-[10px] text-white/40">{c.game}</p>

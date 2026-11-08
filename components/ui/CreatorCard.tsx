@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import React from 'react';
@@ -37,14 +39,13 @@ export default function CreatorCard({
         <div className="absolute right-2 top-2"><PreviewBadge /></div>
         {/* Avatar pinned at the bottom of the banner */}
         <div className="absolute left-4" style={{ bottom: -22 }}>
-          <img
+          <Image
             src={`https://api.dicebear.com/7.x/bottts/svg?seed=${name}&backgroundColor=0D0D14`}
             loading="lazy"
             width={44}
             height={44}
             className="rounded-full border-2 border-kv-card"
-            alt={name}
-          />
+            alt={name} unoptimized sizes="44px" />
         </div>
       </div>
 

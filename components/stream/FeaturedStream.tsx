@@ -1,9 +1,13 @@
 'use client';
 
+import Image from 'next/image'
+
+import PreviewVideo from '@/components/stream/PreviewVideo'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { getShuffledVideos } from '@/lib/videoPool';
+import React, { useState, useRef, useCallback } from 'react';
+import { streamsData } from '@/lib/streamsData';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
   VolumeHighIcon,
@@ -34,13 +38,12 @@ function StreamerHoverCard({ visible }: { visible: boolean }) {
       }}
     >
       <div className="flex items-center gap-3">
-        <img
+        <Image
           src="https://api.dicebear.com/7.x/bottts/svg?seed=GhostAlpha&backgroundColor=0D0D14"
           width={40}
           height={40}
           className="rounded-full border-2 border-yellow-500/40 flex-shrink-0"
-          alt="GhostAlpha"
-        />
+          alt="GhostAlpha" unoptimized sizes="40px" loading="lazy" />
         <div>
           <div className="flex items-center gap-1">
             <span className="text-sm font-bold text-white">GhostAlpha</span>
@@ -76,13 +79,9 @@ export default function FeaturedStream() {
   const [isMuted, setIsMuted] = useState(true);
   const [showChat, setShowChat] = useState(true);
   const [showCard, setShowCard] = useState(false);
-  const [videoSrc, setVideoSrc] = useState('/videos/featured-stream.mp4');
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const featured = streamsData[0];
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setVideoSrc(getShuffledVideos()[0]);
-  }, []);
 
   const toggleFullscreen = useCallback(() => {
     const el = containerRef.current;
@@ -106,18 +105,10 @@ export default function FeaturedStream() {
       } as React.CSSProperties}
     >
       {/* Video and info column */}
-      <div className="min-w-0 aspect-video lg:aspect-auto lg:h-full overflow-hidden" style={{ position: 'relative' }}>
+      <div className="min-w-0 flex flex-col lg:h-full overflow-hidden" style={{ position: 'relative' }}>
         {/* Video Area */}
-        <div className="group relative w-full h-full flex flex-col justify-end overflow-hidden">
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        <div className="group relative aspect-video w-full flex flex-col justify-end overflow-hidden lg:min-h-0 lg:flex-1 lg:aspect-auto">
+          {featured.videoSrc && featured.posterSrc && <PreviewVideo videoSrc={featured.videoSrc} mobileSrc={featured.mobileSrc} posterSrc={featured.posterSrc} title={featured.title} mode="featured" muted={isMuted} priority sizes="(min-width: 1024px) 70vw, 100vw" />}
 
           {/* Vignette overlay */}
           <div
@@ -145,10 +136,8 @@ export default function FeaturedStream() {
         <div
           className="flex items-center justify-between px-4 py-3 border-t border-white/[0.07]"
           style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
+            position: 'relative',
+            flexShrink: 0,
             background: 'rgba(255, 255, 255, 0.01)',
             backdropFilter: 'blur(40px) saturate(220%) brightness(1.05)',
             WebkitBackdropFilter: 'blur(40px) saturate(220%) brightness(1.05)',
@@ -163,13 +152,12 @@ export default function FeaturedStream() {
             onMouseLeave={() => setShowCard(false)}
           >
             <StreamerHoverCard visible={showCard} />
-            <img
+            <Image
               src="https://api.dicebear.com/7.x/bottts/svg?seed=GhostAlpha&backgroundColor=0D0D14"
               width={32}
               height={32}
               className="rounded-full flex-shrink-0"
-              alt="GhostAlpha"
-            />
+              alt="GhostAlpha" unoptimized sizes="32px" loading="lazy" />
             <div>
               <p className="text-sm font-medium text-white">@GhostAlpha</p>
               <p className="text-xs text-white/40">24.5K followers</p>
@@ -179,20 +167,20 @@ export default function FeaturedStream() {
           {/* Video controls */}
           <div className="flex items-center gap-1">
             <button
-              onClick={() => setIsMuted(!isMuted)}
-              className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label={isMuted ? 'Unmute preview' : 'Mute preview'} onClick={() => setIsMuted(!isMuted)}
+              className="flex h-11 w-11 items-center justify-center p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
             >
               <HugeiconsIcon icon={isMuted ? VolumeOffIcon : VolumeHighIcon} size={16} color="currentColor" strokeWidth={1.5} />
             </button>
             <button
-              onClick={toggleFullscreen}
-              className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+              aria-label="Fullscreen preview" onClick={toggleFullscreen}
+              className="flex h-11 w-11 items-center justify-center p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
             >
               <HugeiconsIcon icon={FullScreenIcon} size={16} color="currentColor" strokeWidth={1.5} />
             </button>
             <button
-              onClick={() => setShowChat((v) => !v)}
-              className={`p-2 rounded-lg transition-colors ${showChat ? 'text-yellow-400 bg-yellow-500/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+              aria-label="Toggle preview chat" aria-pressed={showChat} onClick={() => setShowChat((v) => !v)}
+              className={`flex h-11 w-11 items-center justify-center p-2 rounded-lg transition-colors ${showChat ? 'text-yellow-400 bg-yellow-500/10' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
             >
               <HugeiconsIcon icon={SidebarRightIcon} size={16} color="currentColor" strokeWidth={1.5} />
             </button>

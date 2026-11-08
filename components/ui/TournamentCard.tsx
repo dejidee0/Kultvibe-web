@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 
@@ -30,11 +32,10 @@ export default function TournamentCard({
 
       {/* Banner */}
       <div className="relative h-[160px] overflow-hidden">
-        <img
+        <Image
           src={imageSrc}
           alt={name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-        />
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500" unoptimized fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
         {/* Game tag */}

@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import React, { useState } from 'react'
@@ -53,11 +55,10 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
 
       {/* Banner */}
       <div className="relative h-[340px] sm:h-[300px] xl:h-[280px] rounded-xl overflow-hidden mb-6">
-        <img
+        <Image
           src={tournament.imageSrc}
           alt={tournament.name}
-          className="w-full h-full object-cover"
-        />
+          className="w-full h-full object-contain" unoptimized fill sizes="(min-width: 1024px) 80vw, 100vw" loading="lazy" />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.40) 55%, rgba(0,0,0,0.10) 100%)' }} />
 
         <div className="absolute top-4 left-4 flex items-center gap-2">
@@ -238,14 +239,13 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
                     onMouseEnter={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(240,180,41,0.30)')}
                     onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)')}
                   >
-                    <img
+                    <Image
                       src={`https://api.dicebear.com/7.x/bottts/svg?seed=${name}${i}&backgroundColor=0D0D14`}
                       loading="lazy"
                       width={40}
                       height={40}
                       className="rounded-full"
-                      alt={name}
-                    />
+                      alt={name} unoptimized sizes="40px" />
                     <span className="text-xs truncate w-full text-center" style={{ color: 'rgba(255,255,255,0.70)' }}>
                       {name}
                     </span>

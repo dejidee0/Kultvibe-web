@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import { brand } from '@/lib/brand'
@@ -63,15 +65,14 @@ function FeaturedCreatorCard({ creator }: { creator: CreatorData }) {
             <div className="absolute inset-0 h-[80px]" style={{ background: 'rgba(0,0,0,0.20)' }} />
           </div>
           <div className="absolute left-4 flex items-center justify-between w-[calc(100%-32px)]" style={{ bottom: -24 }}>
-            <img
+            <Image
               src={`https://api.dicebear.com/7.x/bottts/svg?seed=${creator.name}&backgroundColor=0D0D14`}
               loading="lazy"
               width={48}
               height={48}
               className="rounded-full flex-shrink-0"
               style={{ border: '2px solid #111118' }}
-              alt={creator.name}
-            />
+              alt={creator.name} unoptimized sizes="48px" />
             {creator.verified && (
               <HugeiconsIcon icon={CheckmarkCircle01Icon} size={16} color="#F0B429" strokeWidth={1.5} />
             )}
@@ -138,15 +139,14 @@ function CreatorCard({ creator }: { creator: CreatorData }) {
             <div className="absolute inset-0 h-[56px]" style={{ background: 'rgba(0,0,0,0.25)' }} />
           </div>
           <div className="absolute left-3 flex items-center justify-between w-[calc(100%-24px)]" style={{ bottom: -20 }}>
-            <img
+            <Image
               src={`https://api.dicebear.com/7.x/bottts/svg?seed=${creator.name}&backgroundColor=0D0D14`}
               loading="lazy"
               width={40}
               height={40}
               className="rounded-full flex-shrink-0"
               style={{ border: '2px solid #111118' }}
-              alt={creator.name}
-            />
+              alt={creator.name} unoptimized sizes="40px" />
             {creator.verified && (
               <HugeiconsIcon icon={CheckmarkCircle01Icon} size={13} color="#F0B429" strokeWidth={1.5} />
             )}

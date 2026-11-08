@@ -1,8 +1,12 @@
 'use client';
 
+import { mediaForVideo } from '@/lib/streamMedia'
+
+import PreviewVideo from '@/components/stream/PreviewVideo'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { PlayCircleIcon } from '@hugeicons/core-free-icons';
@@ -16,6 +20,8 @@ type StreamCardProps = {
   game: string;
   tags: string[];
   videoSrc?: string;
+  mobileSrc?: string;
+  posterSrc?: string;
   gradientFrom?: string;
   gradientTo?: string;
 };
@@ -27,22 +33,22 @@ export default function StreamCard({
   city,
   tags,
   videoSrc,
+  mobileSrc,
+  posterSrc,
   gradientFrom,
   gradientTo,
 }: StreamCardProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [hovered, setHovered] = useState(false);
+  const media = posterSrc ? { posterSrc, mobileSrc } : mediaForVideo(videoSrc);
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(240,180,41,0.40)';
-    videoRef.current?.play();
+    setHovered(true);
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)';
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
+    setHovered(false);
   };
 
   const card = (
@@ -58,15 +64,8 @@ export default function StreamCard({
     >
       {/* Thumbnail */}
       <div className="relative aspect-video lg:aspect-auto lg:h-[110px] overflow-hidden flex-shrink-0">
-        {videoSrc ? (
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          />
+        {videoSrc && media ? (
+          <PreviewVideo videoSrc={videoSrc} {...media} title={title} mode="card" hovered={hovered} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" />
         ) : (
           <div
             className="absolute inset-0"

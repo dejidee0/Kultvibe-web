@@ -147,7 +147,7 @@ export default function GiftPicker() {
                     e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
                   }}
                 >
-                  <GiftVisual twemojiHex={gift.twemojiHex} emoji={gift.emoji} size={32} />
+                  <GiftVisual twemojiHex={gift.twemojiHex} emoji={gift.emoji} size={32}  label={gift.name} />
                   <span style={{ fontSize: '11px', fontWeight: 500, color: '#fff' }}>
                     {gift.name}
                   </span>

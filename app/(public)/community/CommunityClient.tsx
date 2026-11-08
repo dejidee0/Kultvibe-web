@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import React, { useState, useEffect, useRef, useMemo } from 'react'
@@ -198,13 +200,12 @@ export default function CommunityClient() {
           className="p-3 flex items-center gap-2"
           style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
         >
-          <img
+          <Image
             src={DICEBEAR('currentuser')}
             width={28} height={28}
             className="rounded-full flex-shrink-0"
             loading="lazy"
-            alt="You"
-          />
+            alt="Your sample avatar" unoptimized sizes="28px" />
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-white truncate">You</p>
             <p className="text-[10px]" style={{ color: '#10B981' }}>● Online</p>
@@ -249,14 +250,13 @@ export default function CommunityClient() {
 
           {displayedMessages.map((msg) => (
             <div key={msg.id} className={`flex items-start gap-3 ${msg.isSystem ? 'opacity-80' : ''}`}>
-              <img
+              <Image
                 src={DICEBEAR(msg.userSeed)}
                 width={32} height={32}
                 loading="lazy"
                 className="rounded-full flex-shrink-0"
                 alt={msg.user}
-                style={msg.isSystem ? { border: '1px solid rgba(240,180,41,0.30)' } : {}}
-              />
+                style={msg.isSystem ? { border: '1px solid rgba(240,180,41,0.30)' } : {}} unoptimized sizes="32px" />
               <div className="flex-1 min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-1">
                   <span
@@ -295,13 +295,12 @@ export default function CommunityClient() {
             className="shrink-0 px-3 lg:px-5 py-3 lg:py-4 flex items-center gap-2"
             style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}
           >
-            <img
+            <Image
               src={DICEBEAR('currentuser')}
               width={28} height={28}
               loading="lazy"
               className="rounded-full flex-shrink-0"
-              alt="You"
-            />
+              alt="Your sample avatar" unoptimized sizes="28px" />
             <div className="min-w-0 flex-1 relative">
               <input
                 type="text"
@@ -354,13 +353,12 @@ export default function CommunityClient() {
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent' }}
             >
               <div className="relative flex-shrink-0">
-                <img
+                <Image
                   src={DICEBEAR(member.seed)}
                   width={28} height={28}
                   loading="lazy"
                   className="rounded-full"
-                  alt={member.name}
-                />
+                  alt={member.name} unoptimized sizes="28px" />
                 <div
                   className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full"
                   style={{ background: '#10B981', border: '2px solid #0D0D14' }}

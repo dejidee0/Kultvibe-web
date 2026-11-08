@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import { brand } from '@/lib/brand'
@@ -71,15 +73,14 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
           {/* Avatar overlapping banner */}
           <div className="absolute -bottom-12 left-6">
             <div className="relative">
-              <img
+              <Image
                 src={`https://api.dicebear.com/7.x/bottts/svg?seed=${player.handle}&backgroundColor=0D0D14`}
                 loading="lazy"
                 width={88}
                 height={88}
                 className="rounded-full"
                 style={{ border: `3px solid ${tc.text}` }}
-                alt={player.displayName}
-              />
+                alt={player.displayName} unoptimized sizes="88px" />
               <div
                 className="absolute bottom-1 right-1 w-4 h-4 rounded-full"
                 style={{ background: '#FF4D6D', border: '2px solid #08080D' }}

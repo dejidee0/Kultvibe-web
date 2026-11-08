@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image'
+
 import { brand } from '@/lib/brand'
 
 import React from 'react';
@@ -28,13 +30,12 @@ export default function IconBar() {
             className="flex-shrink-0 overflow-hidden"
             style={{ width: 40, height: 40 }}
           >
-            <img
+            <Image
               src="/logo.png"
               alt={brand.name}
               width={40}
               height={40}
-              style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }}
-            />
+              style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }} unoptimized sizes="40px" loading="lazy" />
           </div>
         </Link>
       </div>
@@ -48,7 +49,7 @@ export default function IconBar() {
           return (
             <div key={label} className="relative group/tip">
               <Link href={href} tabIndex={-1}>
-                <button
+                <button aria-label={label}
                   className="flex items-center justify-center rounded-lg transition-all duration-150"
                   style={{
                     width: 40,
@@ -93,7 +94,7 @@ export default function IconBar() {
       <div className="flex flex-col items-center gap-3 flex-shrink-0">
         <div style={{ width: 32, borderTop: '1px solid rgba(255,255,255,0.06)' }} />
         <div className="relative group/tip">
-          <button
+          <button aria-label="Wallet preview"
             className="flex items-center justify-center rounded-lg transition-colors"
             style={{ width: 40, height: 40, color: 'rgba(255,255,255,0.4)' }}
             onMouseEnter={(e) => {
@@ -119,12 +120,11 @@ export default function IconBar() {
             Wallet
           </div>
         </div>
-        <img
+        <Image
           src="https://api.dicebear.com/7.x/adventurer/svg?seed=kultvibe-user&backgroundColor=F0B429"
           alt="Your avatar"
           className="rounded-full"
-          style={{ width: 32, height: 32 }}
-        />
+          style={{ width: 32, height: 32 }} unoptimized width={32} height={32} sizes="32px" loading="lazy" />
       </div>
     </div>
   );

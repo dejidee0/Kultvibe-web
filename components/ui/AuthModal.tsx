@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -117,7 +119,7 @@ export default function AuthModal() {
               <HugeiconsIcon icon={Cancel01Icon} size={20} color="currentColor" strokeWidth={1.5} />
             </button>
             <div className="mb-5 flex items-center justify-center gap-2">
-              <div className="h-8 w-8 shrink-0 overflow-hidden"><img src="/logo.png" alt={brand.name} width={32} height={32} style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }} /></div>
+              <div className="h-8 w-8 shrink-0 overflow-hidden"><Image src="/logo.png" alt={brand.name} width={32} height={32} style={{ transform: 'scale(2.2)', transformOrigin: 'center', display: 'block' }} unoptimized sizes="32px" loading="lazy" /></div>
               <span className="text-base font-medium">{brand.name}</span>
             </div>
             <h2 id="auth-heading" className="text-center text-xl font-medium">{modalView === 'register' ? 'Join the waitlist' : 'Welcome back'}</h2>
@@ -126,7 +128,7 @@ export default function AuthModal() {
               {['Google', 'Discord', 'TikTok', 'X'].map(provider => <button type="button" key={provider}
                 onClick={() => setError('Accounts open at launch. Join the waitlist for access.')}
                 className="flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3 text-base hover:bg-white/10">
-                <img src={`/icons/${provider.toLowerCase()}.svg`} width={16} height={16} alt="" loading="lazy" />{provider}
+                <Image src={`/icons/${provider.toLowerCase()}.svg`} width={16} height={16} alt="" loading="lazy" unoptimized sizes="16px" />{provider}
               </button>)}
             </div>}
             <form onSubmit={handleRegister} className="min-w-0">

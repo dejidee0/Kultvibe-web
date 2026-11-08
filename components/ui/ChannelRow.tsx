@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image'
+
 import PreviewBadge from '@/components/ui/PreviewBadge'
 
 import React, { useRef, useState } from 'react';
@@ -61,13 +63,12 @@ function TooltipCard({
       >
         {/* Avatar + name row */}
         <div className="flex items-center gap-2 mb-2.5">
-          <img
+          <Image
             src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(name)}&backgroundColor=0D0D14`}
             loading="lazy"
             alt={name}
             className="rounded-full flex-shrink-0"
-            style={{ width: 32, height: 32, opacity: isLive ? 1 : 0.5 }}
-          />
+            style={{ width: 32, height: 32, opacity: isLive ? 1 : 0.5 }} unoptimized width={32} height={32} sizes="32px" />
           <div className="flex flex-col min-w-0">
             <span
               className="font-semibold truncate"
@@ -172,13 +173,12 @@ export default function ChannelRow({
         )}
 
         {/* Avatar */}
-        <img
+        <Image
           src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(name)}&backgroundColor=0D0D14`}
           loading="lazy"
           alt={name}
           className="rounded-full flex-shrink-0"
-          style={{ width: 28, height: 28, opacity: isLive ? 1 : 0.5 }}
-        />
+          style={{ width: 28, height: 28, opacity: isLive ? 1 : 0.5 }} unoptimized width={28} height={28} sizes="28px" />
 
         {/* Text */}
         <div className="flex flex-col min-w-0 flex-1">
