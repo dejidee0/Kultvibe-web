@@ -12,7 +12,7 @@ const initialMessages = [
   { id: 4, user: '@LagosVibes', color: '#F59E0B', text: 'Top 5 already?', isGift: false },
   { id: 5, user: '@CallOfNaija', color: '#F0B429', text: 'Drop the settings bro please', isGift: false },
   { id: 6, user: '@ZuluFanatic', color: '#F472B6', text: 'First time watching, this is insane', isGift: false },
-  { id: 7, user: '@PH_Gamer', color: '#A78BFA', text: "1.2K viewers let's gooo", isGift: false },
+  { id: 7, user: '@PH_Gamer', color: '#A78BFA', text: "Great energy tonight.", isGift: false },
   { id: 8, user: '@KanoKing', color: '#34D399', text: 'Clutch incoming, I can feel it', isGift: false },
 ];
 
@@ -83,11 +83,11 @@ export default function LiveChat() {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 flex-shrink-0">
         <span className="font-medium text-white" style={{ fontSize: 13 }}>
-          Live chat
+          Preview chat
         </span>
         <div className="flex items-center gap-1.5" style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>
-          <span className="w-2 h-2 rounded-full bg-[#FF4D6D] animate-pulse" />
-          <span>1,280 watching</span>
+          <span className="w-2 h-2 rounded-full bg-white/40" />
+          <span>Preview</span>
         </div>
       </div>
 

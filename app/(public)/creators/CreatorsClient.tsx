@@ -1,5 +1,7 @@
 'use client'
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import { brand } from '@/lib/brand'
 
 import React, { useState, useEffect, useRef, useMemo } from 'react'
@@ -53,6 +55,7 @@ function FeaturedCreatorCard({ creator }: { creator: CreatorData }) {
         onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)')}
       >
         <div className="relative">
+          <div className="absolute right-2 top-2 z-10"><PreviewBadge /></div>
           <div
             className="h-[80px] rounded-t-xl overflow-hidden"
             style={{ background: `linear-gradient(135deg, ${creator.bannerFrom}, ${creator.bannerTo})` }}
@@ -127,6 +130,7 @@ function CreatorCard({ creator }: { creator: CreatorData }) {
         onMouseLeave={e => ((e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.07)')}
       >
         <div className="relative">
+          <div className="absolute right-2 top-2 z-10"><PreviewBadge /></div>
           <div
             className="h-[56px] rounded-t-xl overflow-hidden"
             style={{ background: `linear-gradient(135deg, ${creator.bannerFrom}, ${creator.bannerTo})` }}

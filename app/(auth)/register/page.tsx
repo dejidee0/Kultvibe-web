@@ -1,7 +1,5 @@
-export default function RegisterPage() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-kv-text">Register Page</h1>
-    </div>
-  );
+import AccountPreview from '@/components/ui/AccountPreview'
+
+export default function Page() {
+  return <AccountPreview registration />
 }

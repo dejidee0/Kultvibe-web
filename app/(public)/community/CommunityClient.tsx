@@ -1,5 +1,7 @@
 'use client'
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { HugeiconsIcon } from '@hugeicons/react'
 import { EyeIcon, Sent02Icon, UserGroupIcon } from '@hugeicons/core-free-icons'
@@ -221,7 +223,7 @@ export default function CommunityClient() {
           <div className="flex min-w-0 items-center gap-2">
             <HugeiconsIcon icon={currentRoom.icon} size={18} color="rgba(255,255,255,0.60)" strokeWidth={1.5} />
             <div>
-              <p className="text-sm font-medium text-white">{currentRoom.name}</p>
+              <p className="text-sm font-medium text-white">{currentRoom.name} <PreviewBadge /></p>
               <p className="text-[10px] text-white/35">{currentRoom.description}</p>
             </div>
           </div>

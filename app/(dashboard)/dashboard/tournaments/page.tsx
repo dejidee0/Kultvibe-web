@@ -1,7 +1,5 @@
-export default function DashboardTournamentsPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-kv-text">Dashboard Tournaments Page</h1>
-    </div>
-  );
+import DashboardPreview from '@/components/ui/DashboardPreview'
+
+export default function Page() {
+  return <DashboardPreview title="Your tournaments" description="Your entries will appear here when tournament registration opens. The tournament listings currently show sample events." />
 }

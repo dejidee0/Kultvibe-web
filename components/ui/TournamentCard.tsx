@@ -1,6 +1,8 @@
 'use client';
 
-'use client';
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
+
 
 import React from 'react';
 
@@ -53,6 +55,7 @@ export default function TournamentCard({
 
       {/* Body */}
       <div className="p-3">
+        <div className="mb-2"><PreviewBadge /></div>
         <div className="flex items-center justify-between mb-2">
           <span className="text-[11px] text-white/40">{spotsLeft} spots left</span>
           <span className="text-[11px] text-white/40">{totalSpots} total</span>

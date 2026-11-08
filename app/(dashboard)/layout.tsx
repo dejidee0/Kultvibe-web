@@ -1,3 +1,4 @@
+import PreviewNotice from '@/components/ui/PreviewNotice'
 import React from 'react';
 import DashboardSidebar from '@/components/layout/DashboardSidebar';
 import Topbar from '@/components/layout/Topbar';
@@ -17,6 +18,7 @@ export default function DashboardLayout({
         <div className="hidden lg:block"><Topbar /></div>
         <MobileHeader />
         <main className="flex-1 min-h-0 min-w-0 overflow-y-auto bg-kv-surface p-4 pb-[calc(65px+env(safe-area-inset-bottom)+1rem)] lg:p-6">
+          <PreviewNotice />
           {children}
         </main>
         <MobileTabBar dashboard />

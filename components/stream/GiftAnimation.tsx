@@ -1,5 +1,7 @@
 'use client'
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useGiftStore } from '@/store/useGiftStore'
@@ -51,6 +53,7 @@ export default function GiftAnimation() {
   return (
     <>
       <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">
+        {activeGifts.length > 0 && <div className="absolute left-3 top-12"><PreviewBadge /></div>}
         <AnimatePresence>
           {floatingGifts.map((activeGift, index) => (
             <GiftFloat

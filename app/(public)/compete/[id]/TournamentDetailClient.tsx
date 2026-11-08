@@ -1,5 +1,7 @@
 'use client'
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
@@ -77,7 +79,7 @@ export default function TournamentDetailClient({ tournament }: { tournament: Tou
 
         <div className="absolute bottom-4 left-4 right-4 flex min-w-0 flex-col items-start gap-4 sm:bottom-6 sm:left-6 sm:right-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-xl sm:text-2xl font-medium text-white mb-2 break-words">{tournament.name}</h1>
+            <h1 className="text-xl sm:text-2xl font-medium text-white mb-2 break-words">{tournament.name} <PreviewBadge /></h1>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2" style={{ color: 'rgba(255,255,255,0.60)', fontSize: 13 }}>
               <span className="flex items-center gap-1.5">
                 <HugeiconsIcon icon={Calendar01Icon} size={13} color="rgba(255,255,255,0.50)" strokeWidth={1.5} />

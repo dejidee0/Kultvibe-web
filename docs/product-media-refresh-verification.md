@@ -57,6 +57,14 @@ Below 25: Be one of the first on KultVibe. At 25 and above: floor to the nearest
 
 TypeScript and lint pass with zero errors and the same 32 image warnings. No API request was made by these static checks. The server-rendered mocked cases 0, 12, 30, 1250 and error remain required in B7.
 
+## B5: honest preview content
+
+Added the exact shared PreviewNotice on public sample pages and dashboard pages, plus neutral Preview tags on stream cards, section headers, creator cards, discovery cards, community rooms, profiles, tournaments and leaderboards. Red LIVE pills became PREVIEW. Hidden simulated viewer counts and stream timers, including the channel tooltip/row, chat header and discovery watching counter. Existing sample data remains intact; stream tags labelled LIVE render as PREVIEW.
+
+Gift UI explains that it is a sample and no money is charged. Wallet and other dashboard placeholders now have clear preview/empty states rather than generic Page headings. Standalone login/register pages explain the current waitlist stage and open the same accessible registration modal; they do not implement account authentication.
+
+TypeScript and lint pass: zero errors and the same 32 existing image warnings. Removed a duplicate use-client directive exposed by the new import, eliminating the temporary extra warning. Verified 13 protected navigation/category checks against original main: unchanged sidebar/navigation data, mobile/dashboard navigation, category data, creator/discover fixtures, and the inline stream/tournament/leaderboard/discover lists. Full rendered regression remains gated on B7.
+
 ## Remaining steps
 
 B1 through B8 remain pending. Part C remains gated on Part B.

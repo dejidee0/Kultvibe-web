@@ -1,5 +1,7 @@
 'use client';
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React, { useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -16,7 +18,6 @@ type ChannelRowProps = {
 function TooltipCard({
   name,
   game,
-  viewers,
   isLive,
   streamTitle,
   top,
@@ -78,7 +79,7 @@ function TooltipCard({
               <span
                 style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}
               >
-                Live now
+                Preview
               </span>
             )}
           </div>
@@ -106,11 +107,9 @@ function TooltipCard({
           <div className="flex items-center gap-1.5 mb-2.5">
             <span
               className="rounded-full animate-pulse"
-              style={{ width: 7, height: 7, background: '#FF4D6D', display: 'inline-block' }}
+              style={{ width: 7, height: 7, background: '#71717A', display: 'inline-block' }}
             />
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.55)' }}>
-              {viewers >= 1000 ? `${(viewers / 1000).toFixed(1)}K` : viewers} viewers
-            </span>
+            <PreviewBadge />
           </div>
         )}
 
@@ -167,8 +166,8 @@ export default function ChannelRow({
         {/* Live pulse dot */}
         {isLive && (
           <span
-            className="animate-pulse rounded-full flex-shrink-0"
-            style={{ width: 6, height: 6, background: '#FF4D6D' }}
+            className="rounded-full flex-shrink-0"
+            style={{ width: 6, height: 6, background: '#71717A' }}
           />
         )}
 
@@ -202,12 +201,7 @@ export default function ChannelRow({
 
         {/* Viewer count */}
         {isLive && (
-          <span
-            className="flex-shrink-0"
-            style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)' }}
-          >
-            {viewers >= 1000 ? `${(viewers / 1000).toFixed(1)}K` : viewers}
-          </span>
+          <PreviewBadge />
         )}
       </div>
 

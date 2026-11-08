@@ -1,5 +1,7 @@
 'use client'
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import { brand } from '@/lib/brand'
 
 import React, { useState, useEffect } from 'react'
@@ -121,6 +123,7 @@ export default function DiscoverClient() {
 
             {/* Content */}
             <div className="flex-1 min-w-0">
+              <div className="mb-2"><PreviewBadge /></div>
               <p className="text-xs font-medium text-white leading-snug mb-0.5">{item.title}</p>
               <p className="text-xs text-white/50 mb-2 leading-relaxed break-words">{item.description}</p>
               <div className="flex flex-wrap items-center gap-2">
@@ -147,7 +150,7 @@ export default function DiscoverClient() {
             {/* Far-right: timestamp + value + action */}
             <div className="col-start-2 flex flex-wrap items-center justify-between gap-2 sm:flex-shrink-0 sm:flex-col sm:items-end sm:self-stretch">
               <span className="text-[10px] text-white/30 whitespace-nowrap">{item.timestamp}</span>
-              {item.value && (
+              {item.value && item.type !== 'stream_live' && (
                 <span className="text-[10px] font-semibold text-[#F0B429]">{item.value}</span>
               )}
               <Link href={(item.type === 'winner' || item.type === 'rank_up') ? `/players/${item.actorSeed}` : item.actionHref}>
@@ -161,7 +164,7 @@ export default function DiscoverClient() {
                       : { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.10)', color: 'rgba(255,255,255,0.60)' }
                   }
                 >
-                  {item.actionLabel}
+                  {item.type === 'stream_live' ? 'Watch preview' : item.actionLabel}
                 </button>
               </Link>
             </div>
@@ -178,14 +181,13 @@ export default function DiscoverClient() {
           style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}
         >
           <div className="flex items-center gap-2 mb-4">
-            <div className="w-2 h-2 rounded-full bg-[#FF4D6D] animate-pulse" />
-            <span className="text-xs font-medium text-white">Live right now</span>
+            <PreviewBadge />
+            <span className="text-xs font-medium text-white">Sample activity</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { label: 'Streams live',  value: '47',    color: '#FF4D6D' },
+              { label: 'Sample streams', value: '47', color: '#A1A1AA' },
               { label: 'In tournaments', value: '1,240', color: '#F0B429' },
-              { label: 'Watching',       value: '8.4K',  color: '#F0B429' },
               { label: 'Chatting',       value: '3.2K',  color: '#A78BFA' },
             ].map(stat => (
               <div key={stat.label} className="flex flex-col gap-1">
@@ -197,7 +199,7 @@ export default function DiscoverClient() {
           </div>
         </div>
 
-        {/* Filling fast */}
+        {/* Tournament preview */}
         <div
           className="rounded-xl p-4"
           style={{ background: '#111118', border: '1px solid rgba(255,255,255,0.07)' }}

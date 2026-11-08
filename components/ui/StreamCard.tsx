@@ -1,9 +1,11 @@
 'use client';
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React, { useRef } from 'react';
 import Link from 'next/link';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { EyeIcon, PlayCircleIcon } from '@hugeicons/core-free-icons';
+import { PlayCircleIcon } from '@hugeicons/core-free-icons';
 
 type StreamCardProps = {
   id?: string;
@@ -23,7 +25,6 @@ export default function StreamCard({
   title,
   streamer,
   city,
-  viewers,
   tags,
   videoSrc,
   gradientFrom,
@@ -80,18 +81,8 @@ export default function StreamCard({
 
         {/* Bottom-left: LIVE + viewers */}
         <div className="absolute bottom-2 left-2 flex items-center gap-1.5 z-10">
-          <span
-            className="font-bold text-white rounded px-1.5 py-0.5"
-            style={{ fontSize: 9, background: '#FF4D6D', letterSpacing: '0.06em' }}
-          >
-            LIVE
-          </span>
-          <div className="flex items-center gap-0.5 bg-black/60 rounded px-1.5 py-0.5" style={{ color: 'rgba(255,255,255,0.80)' }}>
-            <HugeiconsIcon icon={EyeIcon} size={10} color="currentColor" strokeWidth={1.5} />
-            <span style={{ fontSize: 10 }}>
-              {viewers >= 1000 ? `${(viewers / 1000).toFixed(1)}K` : viewers}
-            </span>
-          </div>
+          <PreviewBadge uppercase />
+
         </div>
 
         {/* Hover play overlay */}
@@ -121,7 +112,7 @@ export default function StreamCard({
                 letterSpacing: '0.04em',
               }}
             >
-              {tag}
+              {tag === 'LIVE' ? 'PREVIEW' : tag}
             </span>
           ))}
         </div>

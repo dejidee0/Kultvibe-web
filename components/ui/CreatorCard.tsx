@@ -1,5 +1,7 @@
 'use client';
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import type { IconSvgElement } from '@hugeicons/react';
@@ -32,6 +34,7 @@ export default function CreatorCard({
           <div className={`absolute inset-0 h-[70px] bg-gradient-to-br ${bannerFrom} ${bannerTo}`} />
           <div className="absolute inset-0 h-[70px] bg-black/20" />
         </div>
+        <div className="absolute right-2 top-2"><PreviewBadge /></div>
         {/* Avatar pinned at the bottom of the banner */}
         <div className="absolute left-4" style={{ bottom: -22 }}>
           <img

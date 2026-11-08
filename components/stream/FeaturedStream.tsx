@@ -1,10 +1,11 @@
 'use client';
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { getShuffledVideos } from '@/lib/videoPool';
 import { HugeiconsIcon } from '@hugeicons/react';
 import {
-  EyeIcon,
   VolumeHighIcon,
   VolumeOffIcon,
   FullScreenIcon,
@@ -128,15 +129,12 @@ export default function FeaturedStream() {
 
           {/* LIVE badge and timer */}
           <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 10 }} className="flex items-center gap-2">
-            <span className="bg-[#FF4D6D] text-white text-xs font-medium px-2 py-1 rounded">LIVE</span>
-            <span className="bg-black/60 text-white/80 text-xs px-2 py-1 rounded">1:24:07</span>
+            <PreviewBadge uppercase />
+
           </div>
 
           {/* Viewer count */}
-          <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 10 }} className="flex items-center gap-1 bg-black/60 rounded px-2 py-1">
-            <HugeiconsIcon icon={EyeIcon} size={12} className="text-white/60" color="currentColor" strokeWidth={1.5} />
-            <span className="text-xs text-white/80">1,280 viewers</span>
-          </div>
+
 
           {/* Gift overlays */}
           <GiftAnimation />

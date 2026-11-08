@@ -1,14 +1,14 @@
 'use client';
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { EyeIcon, LiveStreaming01Icon, Search01Icon } from '@hugeicons/core-free-icons';
+import { LiveStreaming01Icon, Search01Icon } from '@hugeicons/core-free-icons';
 import StreamCard from '@/components/ui/StreamCard';
 import StreamCardSkeleton from '@/components/ui/StreamCardSkeleton';
 
-function fmtViewers(n: number) {
-  return n >= 1000 ? `${(n / 1000).toFixed(1)}K` : String(n);
-}
+
 
 type HeroStream = {
   title: string;
@@ -95,20 +95,8 @@ function HeroStreamCard({ stream }: { stream: HeroStream }) {
       />
 
       <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-        <span
-          className="flex items-center gap-1 text-white font-bold rounded-md"
-          style={{ fontSize: 9, background: '#FF4D6D', padding: '3px 7px', letterSpacing: '0.05em' }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-          LIVE
-        </span>
-        <div
-          className="flex items-center gap-1 rounded-md"
-          style={{ background: 'rgba(0,0,0,0.62)', backdropFilter: 'blur(8px)', padding: '3px 8px' }}
-        >
-          <HugeiconsIcon icon={EyeIcon} size={10} color="rgba(255,255,255,0.65)" strokeWidth={1.5} />
-          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.92)' }}>{fmtViewers(stream.viewers)}</span>
-        </div>
+        <PreviewBadge uppercase />
+
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 p-3">
@@ -166,12 +154,7 @@ function StreamListRow({ stream }: { stream: GridStream }) {
     >
       <div className="relative row-span-2 h-[54px] w-24 flex-shrink-0 overflow-hidden rounded-xl sm:h-[72px] sm:w-32">
         <div className="absolute inset-0" style={{ background: listThumb(stream) }} />
-        <span
-          className="absolute bottom-1.5 left-1.5 text-white font-bold rounded"
-          style={{ fontSize: 8, background: '#FF4D6D', padding: '2px 5px', letterSpacing: '0.05em' }}
-        >
-          LIVE
-        </span>
+        <PreviewBadge uppercase />
       </div>
 
       <div className="flex-1 min-w-0">
@@ -190,16 +173,13 @@ function StreamListRow({ stream }: { stream: GridStream }) {
               className="rounded-md"
               style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', background: 'rgba(255,255,255,0.06)', padding: '2px 6px', letterSpacing: '0.04em' }}
             >
-              {tag}
+              {tag === 'LIVE' ? 'PREVIEW' : tag}
             </span>
           ))}
         </div>
       </div>
 
-      <div className="col-start-2 flex items-center gap-1.5 flex-shrink-0">
-        <HugeiconsIcon icon={EyeIcon} size={12} color="rgba(255,255,255,0.28)" strokeWidth={1.5} />
-        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.38)' }}>{fmtViewers(stream.viewers)}</span>
-      </div>
+
     </div>
   );
 }
@@ -270,12 +250,7 @@ export default function StreamsClient({ initialCategory }: { initialCategory?: s
       {/* ---- Section 1: Trending hero strip with right-edge fade ---- */}
       <div>
         <div className="flex items-center gap-2 mb-3">
-          <span
-            className="text-white font-bold rounded"
-            style={{ fontSize: 10, background: '#FF4D6D', padding: '4px 8px', letterSpacing: '0.05em' }}
-          >
-            LIVE
-          </span>
+          <PreviewBadge uppercase />
           <span className="text-sm font-semibold text-white">Trending right now</span>
         </div>
         <div className="relative">

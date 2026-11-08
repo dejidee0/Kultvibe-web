@@ -1,7 +1,5 @@
-export default function RankPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-kv-text">Rank Page</h1>
-    </div>
-  );
+import DashboardPreview from '@/components/ui/DashboardPreview'
+
+export default function Page() {
+  return <DashboardPreview title="Your rank" description="Your personal rank will appear here when accounts open. Explore the sample leaderboard for a preview." />
 }

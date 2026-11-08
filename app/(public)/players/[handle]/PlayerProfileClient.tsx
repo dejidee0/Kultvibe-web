@@ -1,5 +1,7 @@
 'use client'
 
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
 import { brand } from '@/lib/brand'
 
 import React, { useState } from 'react'
@@ -93,7 +95,7 @@ export default function PlayerProfileClient({ player }: { player: PlayerData }) 
         >
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <h1 className="text-xl font-medium text-white break-words">{player.displayName}</h1>
+              <h1 className="text-xl font-medium text-white break-words">{player.displayName} <PreviewBadge /></h1>
               <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} color="#F0B429" strokeWidth={1.5} />
               <span
                 className="text-xs px-2 py-0.5 rounded-md font-medium"

@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import PreviewBadge from '@/components/ui/PreviewBadge'
+
+import React, { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { HugeiconsIcon } from '@hugeicons/react'
 import {
-  EyeIcon,
   VolumeHighIcon,
   VolumeOffIcon,
   FullScreenIcon,
@@ -21,23 +22,9 @@ import SocialIcon from '@/components/ui/SocialIcon'
 import { useGiftStore } from '@/store/useGiftStore'
 import { useAuthStore } from '@/store/useAuthStore'
 
-function fmtViewers(n: number) {
-  return n >= 1000 ? `${(n / 1000).toFixed(1)}K` : String(n)
-}
 
-function useTimer() {
-  const [seconds, setSeconds] = useState(0)
-  useEffect(() => {
-    const id = setInterval(() => setSeconds(s => s + 1), 1000)
-    return () => clearInterval(id)
-  }, [])
-  const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  const s = seconds % 60
-  return h > 0
-    ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
-    : `${m}:${String(s).padStart(2, '0')}`
-}
+
+
 
 function CheckIcon() {
   return (
@@ -56,7 +43,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { openPicker } = useGiftStore()
   const { openModal } = useAuthStore()
-  const timer = useTimer()
+
 
   const toggleFullscreen = useCallback(() => {
     const el = containerRef.current
@@ -109,26 +96,12 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
 
             {/* Top-left: LIVE + timer */}
             <div className="absolute top-3 left-3 z-20 flex items-center gap-2">
-              <span className="bg-[#FF4D6D] text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                LIVE
-              </span>
-              <span
-                className="text-xs text-white/80 rounded px-2 py-1"
-                style={{ background: 'rgba(0,0,0,0.60)', backdropFilter: 'blur(6px)' }}
-              >
-                {timer}
-              </span>
+              <PreviewBadge uppercase />
+
             </div>
 
             {/* Top-right: viewer count */}
-            <div
-              className="absolute top-3 right-3 z-20 flex items-center gap-1.5 rounded px-2 py-1"
-              style={{ background: 'rgba(0,0,0,0.60)', backdropFilter: 'blur(6px)' }}
-            >
-              <HugeiconsIcon icon={EyeIcon} size={12} color="rgba(255,255,255,0.65)" strokeWidth={1.5} />
-              <span className="text-xs text-white/85">{fmtViewers(stream.viewers)} viewers</span>
-            </div>
+
 
             {/* Bottom-right controls */}
             <div className="absolute bottom-3 right-3 z-20 flex items-center gap-1">
@@ -236,7 +209,7 @@ export default function StreamWatchClient({ stream }: { stream: StreamData }) {
                     <Link href={`/players/${stream.id}`} className="text-base font-semibold text-white hover:text-[#F0B429] transition-colors">{stream.streamer}</Link>
                     <CheckIcon />
                     {stream.isLive && (
-                      <span className="text-[10px] bg-[#FF4D6D] text-white px-2 py-0.5 rounded font-bold">LIVE</span>
+                      <PreviewBadge uppercase />
                     )}
                   </div>
                   <p className="text-xs text-white/40">{stream.followers} followers</p>

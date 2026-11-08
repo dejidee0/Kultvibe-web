@@ -1,7 +1,5 @@
-export default function NotificationsPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-kv-text">Notifications Page</h1>
-    </div>
-  );
+import DashboardPreview from '@/components/ui/DashboardPreview'
+
+export default function Page() {
+  return <DashboardPreview title="Notifications" description="Your notifications will appear here when accounts open." />
 }

@@ -1,7 +1,5 @@
-export default function CreatorPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-kv-text">Creator Page</h1>
-    </div>
-  );
+import DashboardPreview from '@/components/ui/DashboardPreview'
+
+export default function Page() {
+  return <DashboardPreview title="Creator dashboard" description="This is a preview of the creator area. Audience and earnings figures in the preview are sample data." />
 }

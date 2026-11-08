@@ -25,7 +25,7 @@ export default function Homepage() {
       <FeaturedStream />
 
       <section className="flex flex-col gap-3">
-        <SectionHeader badge="LIVE" title="More streams" cta="View all" ctaHref="/streams" />
+        <SectionHeader badge="PREVIEW" title="More streams" cta="View all" ctaHref="/streams" />
         <StreamGrid />
       </section>
 

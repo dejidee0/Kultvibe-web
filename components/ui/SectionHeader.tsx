@@ -1,3 +1,5 @@
+
+import PreviewBadge from '@/components/ui/PreviewBadge'
 import Link from 'next/link';
 import { HugeiconsIcon } from '@hugeicons/react';
 import type { IconSvgElement } from '@hugeicons/react';
@@ -32,14 +34,7 @@ export default function SectionHeader({
   return (
     <div className="flex min-w-0 items-center justify-between max-lg:flex-wrap max-lg:gap-2">
       <div className="flex min-w-0 items-center gap-2">
-        {badge && (
-          <span
-            className="font-bold text-white rounded px-2 py-0.5"
-            style={{ fontSize: 10, background: '#FF4D6D', letterSpacing: '0.06em' }}
-          >
-            {badge}
-          </span>
-        )}
+        <PreviewBadge uppercase={badge === 'PREVIEW'} />
         {icon && <HugeiconsIcon icon={icon} size={18} color={iconColor} strokeWidth={1.5} />}
         <h2 className="text-[15px] font-semibold text-white max-lg:truncate">{title}</h2>
       </div>

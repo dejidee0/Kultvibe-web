@@ -1,7 +1,5 @@
-export default function WalletPage() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold text-kv-text">Wallet Page</h1>
-    </div>
-  );
+import DashboardPreview from '@/components/ui/DashboardPreview'
+
+export default function Page() {
+  return <DashboardPreview title="Wallet" description="This wallet is a preview. No real balance, charges or payments are shown." />
 }

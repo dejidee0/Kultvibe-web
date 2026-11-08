@@ -1,4 +1,6 @@
 'use client'
+
+import PreviewBadge from '@/components/ui/PreviewBadge'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 import { useGiftStore, GIFTS } from '@/store/useGiftStore'
@@ -71,6 +73,7 @@ export default function GiftPicker() {
               padding: '16px',
             }}
           >
+            <div className="mb-3"><PreviewBadge /><p className="mt-1 text-xs text-white/70">Try a sample gift. No money is charged.</p></div>
             {/* VC Balance */}
             <div style={{
               background: 'rgba(240,180,41,0.10)',
@@ -82,7 +85,7 @@ export default function GiftPicker() {
               justifyContent: 'space-between',
               marginBottom: '12px',
             }}>
-              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.50)' }}>Your VC balance</span>
+              <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.50)' }}>Preview VC balance</span>
               <span style={{ fontSize: '13px', fontWeight: 500, color: '#F0B429' }}>15,000 VC</span>
             </div>
 
