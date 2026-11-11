@@ -1,6 +1,6 @@
 # Product and media refresh verification
 
-Updated: 2026-11-09.
+Updated: 2026-11-11.
 
 ## B0: media inventory and production baseline
 
@@ -77,6 +77,23 @@ MEDIA.md inventories 20 local assets with dimensions and byte sizes and 56 exist
 
 TypeScript and lint pass: **0 errors, 0 warnings**. Verified original asset files are unchanged. Corrected two verification/edit-script assumptions: self-closing video tags, and AST printer formatting in an unchanged-data comparison. The final comparison strips only the ten allowed new media-field lines and otherwise matches the original source. The full production-build playback, count/form, weight and layout checks remain mandatory in B7.
 
+## B6b: reproducible media pipeline
+
+Added ffmpeg-static, ffprobe-static and sharp as dev dependencies, the media:optimize and media:image commands, and MEDIA_PIPELINE.md. Source files in media-src/ are ignored. Commands preserve original files, reject existing output slugs without --force, preserve the complete frame, warn on non-16:9 video, and never upscale. The desktop output is a lossless faststart remux. Mobile encoding and poster/image settings match the requested specification.
+
+Temporary copies of featured-stream.mp4 and its poster produced:
+
+| Output | Bytes | Difference from existing pack |
+|---|---:|---:|
+| Desktop remux | 2963837 | 0% |
+| 854×480 H.264 Main, yuv420p | 824174 | -1.13% |
+| 1280×720 poster | 44764 | -7.45% |
+| Image retaining 1280×720 instead of upscaling to 1600 | 45914 | -5.07% |
+
+All four outputs are within 10% of the reference sizes. Both overwrite checks passed, the source checksum was unchanged, and all temporary inputs and outputs were deleted. npm installation reported zero vulnerabilities. No generation or live signup occurred.
+
+Recovered the disk-full dependency installation by removing only regenerable Next.js cache, then replacing the truncated FFmpeg executable left by that interruption. Corrected the verification harness to read image metadata from buffers so Windows file handles do not prevent cleanup. These were installation/test-script corrections.
+
 ## Remaining steps
 
-B1 through B8 remain pending. Part C remains gated on Part B.
+B0 through B6b are complete. B7 production-build/browser verification and B8 release remain pending. Part C remains gated on Part B.
